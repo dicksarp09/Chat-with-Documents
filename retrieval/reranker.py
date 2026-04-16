@@ -1,7 +1,6 @@
 import logging
 from typing import List, Dict, Any, Optional
 import torch
-from sentence_transformers import CrossEncoder
 
 from core.config import settings
 
@@ -20,10 +19,21 @@ class Reranker:
         )
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self._model = None
 
-        logger.info(f"Loading reranker model: {self.model_name} on {self.device}")
-        self.model = CrossEncoder(self.model_name, max_length=512, device=self.device)
-        logger.info(f"Reranker ready: top_k={self.top_k}, min_score={self.min_score}")
+    @property
+    def model(self):
+        if self._model is None:
+            logger.info(f"Loading reranker model: {self.model_name} on {self.device}")
+            from sentence_transformers import CrossEncoder
+
+            self._model = CrossEncoder(
+                self.model_name, max_length=512, device=self.device
+            )
+            logger.info(
+                f"Reranker ready: top_k={self.top_k}, min_score={self.min_score}"
+            )
+        return self._model
 
     def _get_section_title(self, result: Dict[str, Any]) -> str:
         if result.get("node") and hasattr(result["node"], "section_title"):

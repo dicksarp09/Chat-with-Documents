@@ -17,6 +17,17 @@ class Settings(BaseSettings):
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
     reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
+    # Use smaller models for memory-constrained environments
+    embedding_model_tiny: str = (
+        "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    )
+
+    # Cloud detection
+    is_cloud: bool = (
+        os.getenv("RENDER", "").lower() == "true"
+        or os.getenv("VERCEL", "").lower() == "true"
+    )
+
     chunk_size: int = 512
     chunk_overlap: int = 50
     min_chunk_size: int = 200

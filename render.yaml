@@ -7,6 +7,8 @@ services:
     envVars:
       - key: GROQ_API_KEY
         sync: false
+      - key: RENDER
+        value: "true"
     disk:
       enabled: true
       mountPath: /app/data

@@ -1,7 +1,6 @@
 import logging
 from typing import List, Optional, Union
 import numpy as np
-from sentence_transformers import SentenceTransformer
 import torch
 
 from core.config import settings
@@ -20,11 +19,25 @@ class Embedder:
         self.model_name = model_name or settings.embedding_model
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.normalize = normalize_embeddings
+        self._model = None
+        self._embedding_dim = None
 
-        logger.info(f"Loading embedding model: {self.model_name} on {self.device}")
-        self.model = SentenceTransformer(self.model_name, device=self.device)
-        self.embedding_dim = self.model.get_sentence_embedding_dimension()
-        logger.info(f"Embedding dimension: {self.embedding_dim}")
+    @property
+    def model(self):
+        if self._model is None:
+            logger.info(f"Loading embedding model: {self.model_name} on {self.device}")
+            from sentence_transformers import SentenceTransformer
+
+            self._model = SentenceTransformer(self.model_name, device=self.device)
+            self._embedding_dim = self._model.get_sentence_embedding_dimension()
+            logger.info(f"Embedding dimension: {self._embedding_dim}")
+        return self._model
+
+    @property
+    def embedding_dim(self):
+        if self._embedding_dim is None:
+            _ = self.model
+        return self._embedding_dim
 
     def encode(
         self,

@@ -10,8 +10,6 @@ from api.routes.upload import router as upload_router
 from api.routes.query import router as query_router
 from api.routes.websocket import websocket_endpoint
 from core.config import settings
-from embeddings.embedder import get_embedder
-from storage.vector_store import get_vector_store
 
 logging.basicConfig(
     level=getattr(logging, settings.log_level.upper()),
@@ -24,25 +22,8 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"Starting {settings.app_name} v{settings.version}")
-
-    try:
-        logger.info("Initializing embedding model...")
-        embedder = get_embedder()
-        logger.info(f"Embedder ready, dimension: {embedder.get_embedding_dim()}")
-    except Exception as e:
-        logger.warning(f"Embedder initialization warning: {e}")
-
-    try:
-        logger.info("Initializing vector store...")
-        vector_store = get_vector_store()
-        logger.info("Vector store ready")
-    except Exception as e:
-        logger.warning(f"Vector store initialization warning: {e}")
-
-    logger.info("Application startup complete")
-
+    logger.info("Models loaded on-demand to save memory in cloud environments")
     yield
-
     logger.info("Shutting down application...")
 
 
