@@ -1,0 +1,108 @@
+{
+  "timestamp": "2026-04-15T12:12:13.729926",
+  "document": "DICKSON SARPONG_AI Engineer.pdf",
+  "summary": {
+    "avg_faithfulness": 1.0,
+    "avg_relevance": 1.0,
+    "avg_concision": 0.9,
+    "avg_overall": 0.967,
+    "grade": "A - EXCELLENT (Production-grade)"
+  },
+  "results": [
+    {
+      "question": "Who is Dickson Sarpong and what is his experience?",
+      "answer": "Dickson Sarpong is an AI engineer with experience in building low-latency conversational agents, fine-tuning language models, and optimizing infrastructure costs. He achieved a 10-20x real-time generation speed and <500ms first-byte latency for streaming audio by deploying a fine-tuned VoxCPM 1.5 model on H100 GPU infrastructure via Modal. He also developed low-latency, two-way conversational agents using the Gemini Live API via LiveKit, implementing multimodal interactions and integrating real-time audio streams via WebRTC and LiveKit.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.9,
+        "overall_score": 0.97,
+        "explanation": "Answer accurately summarizes Dickson Sarpong's experience and achievements, with specific details and evidence from the context."
+      }
+    },
+    {
+      "question": "What technical skills does Dickson have?",
+      "answer": "Dickson has technical skills in Voice & Audio, including Gemini Live API, ElevenLabs, Deepgram, Whisper, and TTS Fine-tuning, as well as expertise in LLMs, AI Systems, ML infrastructure, RAG, Deployment, Monitoring, and Reliability, with specific experience in Docker, CI/CD, Railway, Modal, AWS, Prometheus, Grafana, and OpenTelemetry, and has achieved outcomes such as reducing p99 latency by 73% and deploying autonomous agentic workflows using LangGraph, Groq API, and Gemini Live API.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.9,
+        "overall_score": 0.97,
+        "explanation": "Answer accurately reflects Dickson's technical skills and experience"
+      }
+    },
+    {
+      "question": "What projects has Dickson worked on?",
+      "answer": "Dickson worked on the VoiceBreeze AI project, where he developed low-latency, two-way conversational agents using the Gemini Live API via LiveKit, and fine-tuned Nigerian-accent TTS models (VoxCPM, Spark-TTS 0.5B) on a 3.5-hour speech dataset, achieving sub-500ms processing for live voice-over-IP (VoIP) interactions and reducing client integration complexity by 75%",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.9,
+        "overall_score": 0.97,
+        "explanation": "Answer accurately summarizes Dickson's work on VoiceBreeze AI project"
+      }
+    },
+    {
+      "question": "What is the document about overall?",
+      "answer": "The document is about the experience and skills of an AI Engineer, specifically in developing low-latency conversational agents, real-time voice agents, and retrieval systems, with a focus on reducing latency and improving system performance, as evidenced by their work on VoiceBreeze AI and GitHub projects, where they utilized technologies such as Gemini Live API, LiveKit, and LangGraph, and achieved metrics such as 73% reduction in p99 latency and sub-500ms processing for live voice-over-IP interactions.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.9,
+        "overall_score": 0.97,
+        "explanation": "Answer accurately summarizes the document, highlighting key skills and experiences of the AI Engineer, with specific technologies and metrics mentioned."
+      }
+    },
+    {
+      "question": "What programming languages is Dickson proficient in?",
+      "answer": "Dickson is proficient in programming languages used for building FastAPI inference services, specifically Python, as evidenced by his experience with FastAPI, a Python web framework, and his work on designing gateway APIs and authoring internal technical documentation for FastAPI inference services.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.8,
+        "overall_score": 0.955,
+        "explanation": "answer is grounded in context, relevant, and concise"
+      }
+    }
+  ]
+}

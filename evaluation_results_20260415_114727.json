@@ -1,0 +1,100 @@
+{
+  "timestamp": "2026-04-15T11:47:27.014739",
+  "document": "DICKSON SARPONG_AI Engineer.pdf",
+  "summary": {
+    "avg_faithfulness": 1.0,
+    "avg_relevance": 1.0,
+    "avg_concision": 1.0,
+    "avg_overall": 1.0,
+    "grade": "A - EXCELLENT"
+  },
+  "results": [
+    {
+      "question": "Who is Dickson Sarpong and what is his experience?",
+      "answer": "Dickson Sarpong is an AI engineer with experience in developing low-latency conversational agents, fine-tuning language models, and deploying production inference services. He has worked with various technologies, including FastAPI, Modal, and H100 GPU infrastructure. His experience includes optimizing operational costs, integrating observability metrics, and designing scalable AI services. He has achieved significant results, such as reducing latency to <500ms and optimizing costs. He has also worked on multilingual speech-to-text and hybrid retrieval systems.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": false,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer accurately summarizes Dickson Sarpong's experience and skills based on the provided context."
+      }
+    },
+    {
+      "question": "What technical skills does Dickson have?",
+      "answer": "Voice & Audio: Gemini Live API, ElevenLabs, Deepgram, Whisper, TTS Fine-tuning, Automatic Speech Recognition, Livekit. LLMs: Groq, OpenAI APIs. AI Systems: LLM agents, tool calling, prompt design, Model Context Protocol. ML infrastructure: Data processing, training pipelines, LoRA finetuning, Model versioning. RAG: RAG architectures, hybrid search, FAISS, Qdrant, ChromaDB. Deployment: Docker, CI/CD, Railway, Modal, AWS. Monitoring: Prometheus, Grafana, LangSmith, OpenTelemetry. Reliability: Circuit breakers, retry logic, graceful degradation, Safety guardrails",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": false,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "Answer directly matches context"
+      }
+    },
+    {
+      "question": "What projects has Dickson worked on?",
+      "answer": "VoiceBreeze AI project",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": false,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "answer is directly supported by context"
+      }
+    },
+    {
+      "question": "What is the document about overall?",
+      "answer": "The document is about the experience and skills of an AI Engineer, specifically in developing low-latency conversational agents, real-time voice agents, and retrieval systems. The engineer has worked on various projects, including integrating AI services with external APIs and deploying containerized ML services. The document highlights the engineer's ability to reduce latency and improve the efficiency of AI systems. The engineer has also developed automated repository analysis tools and implemented governance and safety mechanisms for secure LLM interaction. The overall theme is the engineer's expertise in AI engineering, particularly in retrieval systems and real-time voice agents.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": false,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "accurate summary of the document"
+      }
+    },
+    {
+      "question": "What programming languages is Dickson proficient in?",
+      "answer": "Not found in context",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": false,
+        "hallucinations": [],
+        "missing_info": [
+          "programming languages"
+        ],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "Answer correctly states that the information is not found in the context."
+      }
+    }
+  ]
+}

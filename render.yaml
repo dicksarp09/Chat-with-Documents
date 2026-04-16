@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: chat-docs-api
+    region: oregon
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+    disk:
+      enabled: true
+      mountPath: /app/data
+      sizeGB: 1
+
+  - type: web
+    name: chat-docs-web
+    region: oregon
+    buildCommand: cd frontend && npm install && npm run build
+    startCommand: cd frontend && npm start
+    envVars:
+      - key: API_URL
+        value: https://chat-docs-api.onrender.com
+      - key: WS_URL
+        value: wss://chat-docs-api.onrender.com
+    fromService:
+      name: chat-docs-api
+      envVarKey: RENDER_INTERNAL_HOSTNAME

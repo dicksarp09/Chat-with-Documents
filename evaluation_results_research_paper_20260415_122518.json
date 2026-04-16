@@ -1,0 +1,139 @@
+{
+  "timestamp": "2026-04-15T12:25:18.165225",
+  "document": "22705iied.pdf (Research Paper)",
+  "summary": {
+    "avg_faithfulness": 1.0,
+    "avg_relevance": 1.0,
+    "avg_concision": 0.9,
+    "avg_groundedness": 0.9800000000000001,
+    "avg_info_density": 0.86,
+    "avg_overall": 0.96,
+    "grade": "A - EXCELLENT (Production-grade)"
+  },
+  "results": [
+    {
+      "question": "What is this research paper about?",
+      "answer": "This research paper is about the climate-food nexus, specifically constructing a new Food Security Index (FSI) for 162 countries across four pillars: availability, access, utilisation, and sustainability. The paper aims to show where countries stand today on each pillar and overall, assess how climate impacts and GDP are associated with each pillar, and project how food security shifts under three warming scenarios (1.5\u00b0C, 2\u00b0C, and 4\u00b0C). The FSI scores for developed countries are high, with averages of 8.05 for availability, 9.12 for access, 9.52 for utilisation, and 8.17 for sustainability, while countries with fragility and conflict (FCAS) have low scores across all pillars, with averages of 4.55 for availability, 4.78 for access, 4.17 for utilisation, and 4.04 for sustainability.",
+      "sources": [
+        "a7d19eb0-b5a3-4ccf-8f60-635a8035de2b",
+        "6d41984c-dc70-4c08-9909-a0d8a6480c5a",
+        "cb375a3f-708b-4849-8c54-c16c79f01b61"
+      ],
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.9,
+        "overall_score": 0.97,
+        "explanation": "The answer accurately summarizes the research paper, providing specific details about the Food Security Index and its application to 162 countries."
+      }
+    },
+    {
+      "question": "What are the main findings or conclusions?",
+      "answer": "The main findings of the report are that climate change is increasingly undermining food security in vulnerable countries, with food security risks intensifying as global temperatures rise. Even under a 1.5\u00b0C warming scenario, food security indicators in many low-income and fragile countries begin to deteriorate, with far more severe impacts under higher warming pathways. The countries projected to experience the greatest declines in food security are among those that have contributed the least to global greenhouse gas emissions. The report highlights the need for stronger international cooperation and sustained investment in resilience, including scaling up climate-resilient food systems, strengthening anticipatory social protection, and ensuring that early warning systems are linked to early action. The Global Alliance against Hunger and Poverty is well-positioned to support these goals by championing country-led programmes that combine climate-responsive social protection, sustainable agriculture, and investment in local capacities.",
+      "sources": [
+        "d0bac7b3-fcf4-4657-bf05-0baabc9d7fd0",
+        "a0b13605-b639-4c38-a941-1fe4a9060697",
+        "a95e62e2-c8af-4ea4-baff-a82e2c44ff11"
+      ],
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.9,
+        "overall_score": 0.97,
+        "explanation": "The answer accurately summarizes the main findings of the report, highlighting the impact of climate change on food security in vulnerable countries and the need for international cooperation and investment in resilience."
+      }
+    },
+    {
+      "question": "What methodology was used in this research?",
+      "answer": "The methodology used in this research is not explicitly stated, but it is mentioned that the indicators, methodology, and analysis were shaped by valuable inputs and feedback from government representatives and civil society members of ALL ACT, as well as insights and reflections from partners in various countries, and was reviewed according to IIED's peer review policy, which sets out a rigorous, documented and accountable process.",
+      "sources": [
+        "cfa37841-f93d-4277-bfe5-5f295d66c14d",
+        "1b35ebbe-96d7-42c9-b126-73a6fceaf651",
+        "76f9286c-6c34-4c5c-8e60-742a77ba12ab"
+      ],
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [
+          "explicit methodology details"
+        ],
+        "issues": [
+          "lack of specific methodology details"
+        ],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.8,
+        "groundedness_score": 0.9,
+        "information_density_score": 0.6,
+        "overall_score": 0.89,
+        "explanation": "answer is faithful to context, but lacks specific methodology details"
+      }
+    },
+    {
+      "question": "Who are the authors of this paper?",
+      "answer": "The authors of this paper are Bharadwaj, R, Karthikeyan, N, and Kumar, BA, as stated in the publication information: 'Bharadwaj, R, Karthikeyan, N and Kumar, BA (2026) Food security in a warming world: who is at risk, why and what comes next?'",
+      "sources": [
+        "72f61cb1-b0c6-471c-8dc7-47bc2e7bbf45",
+        "cfa37841-f93d-4277-bfe5-5f295d66c14d",
+        "0af4f2bc-b873-400a-8a64-926ae7f23b01"
+      ],
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 1.0,
+        "groundedness_score": 1.0,
+        "information_density_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer accurately identifies the authors of the paper as stated in the context."
+      }
+    },
+    {
+      "question": "What are the key recommendations?",
+      "answer": "The key recommendations for protecting food security against systemic climate risk include building anticipatory, shock-responsive social protection as a first line of defence, which involves climate risk-informed pre-identification and targeting, instruments that can expand quickly such as cash top-ups, and clear rules for scale-up. This approach has been successfully implemented in countries like Ethiopia, Kenya, and Bangladesh, where programs like the Productive Safety Net Programme (PSNP) and the Hunger Safety Net Programme (HSNP) have helped households maintain living standards during droughts and floods. Additionally, the report suggests that governments should focus on the wider architecture that keeps food systems functioning under stress, rather than solely on agricultural production, and that humanitarian actors, donors, and international financial institutions should align with these systems to provide predictable scale-up finance.",
+      "sources": [
+        "2d167572-44ba-4db7-ad6b-bd3a538d8dbd",
+        "f76ec49a-2bfe-42ee-921c-7f38a16f740d",
+        "cb375a3f-708b-4849-8c54-c16c79f01b61"
+      ],
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "concision_score": 0.9,
+        "groundedness_score": 1.0,
+        "information_density_score": 0.9,
+        "overall_score": 0.97,
+        "explanation": "The answer accurately summarizes the key recommendations for protecting food security against systemic climate risk, providing specific examples and technologies."
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-04-14T14:00:06.784009",
+  "document": "DICKSON SARPONG_AI Engineer.pdf",
+  "summary": {
+    "avg_faithfulness": 0,
+    "avg_relevance": 0,
+    "avg_overall": 0,
+    "grade": "N/A"
+  },
+  "results": [
+    {
+      "question": "Who is Dickson Sarpong and what is his experience?",
+      "answer": "ERROR",
+      "evaluation": {
+        "error": "'\\n    \"faithful\"'"
+      }
+    },
+    {
+      "question": "What technical skills does Dickson have?",
+      "answer": "ERROR",
+      "evaluation": {
+        "error": "'\\n    \"faithful\"'"
+      }
+    },
+    {
+      "question": "What projects has Dickson worked on?",
+      "answer": "ERROR",
+      "evaluation": {
+        "error": "'\\n    \"faithful\"'"
+      }
+    },
+    {
+      "question": "What is the document about overall?",
+      "answer": "ERROR",
+      "evaluation": {
+        "error": "'\\n    \"faithful\"'"
+      }
+    },
+    {
+      "question": "What programming languages is Dickson proficient in?",
+      "answer": "ERROR",
+      "evaluation": {
+        "error": "'\\n    \"faithful\"'"
+      }
+    }
+  ]
+}

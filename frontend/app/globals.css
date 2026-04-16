@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 20% 98%;
+    --background-secondary: 40 14% 96%;
+    --foreground: 24 10% 10%;
+    --foreground-secondary: 30 3% 27%;
+    --foreground-muted: 30 4% 47%;
+    --accent: 32 95% 44%;
+    --accent-light: 36 95% 50%;
+    --border: 30 6% 90%;
+    --border-strong: 30 6% 83%;
+    --success: 160 84% 39%;
+    --error: 0 84% 60%;
+    --info: 199 89% 48%;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    background-image: 
+      radial-gradient(ellipse at 50% 0%, rgba(180, 83, 9, 0.03) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    @apply bg-accent/20 text-foreground;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border-strong rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-foreground-muted;
+  }
+}
+
+@layer components {
+  .prose-editorial {
+    @apply font-serif text-base leading-relaxed;
+  }
+
+  .prose-editorial h1 {
+    @apply font-serif text-4xl font-semibold tracking-tight mb-6;
+  }
+
+  .prose-editorial h2 {
+    @apply font-serif text-2xl font-semibold tracking-tight mb-4;
+  }
+
+  .prose-editorial h3 {
+    @apply font-serif text-xl font-medium mb-3;
+  }
+
+  .prose-editorial p {
+    @apply mb-4 text-foreground-secondary;
+  }
+
+  .prose-editorial ul {
+    @apply list-disc list-outside ml-6 mb-4 space-y-1;
+  }
+
+  .prose-editorial li {
+    @apply text-foreground-secondary;
+  }
+
+  .card-paper {
+    @apply bg-white border border-border shadow-soft transition-all duration-200;
+  }
+
+  .card-paper:hover {
+    @apply shadow-lifted border-border-strong;
+  }
+
+  .input-editorial {
+    @apply bg-white border border-border rounded-lg px-4 py-3 
+           text-foreground placeholder:text-foreground-muted
+           focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent
+           transition-all duration-150;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white font-medium px-6 py-3 rounded-lg
+           hover:bg-accent-dark active:scale-[0.98]
+           transition-all duration-150 shadow-soft hover:shadow-lifted;
+  }
+
+  .btn-secondary {
+    @apply bg-background border border-border text-foreground
+           font-medium px-6 py-3 rounded-lg
+           hover:bg-background-secondary hover:border-border-strong
+           active:scale-[0.98] transition-all duration-150;
+  }
+
+  .badge-document {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
+           bg-amber-100 text-amber-800 text-xs font-medium;
+  }
+
+  .badge-csv {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full
+           bg-emerald-100 text-emerald-800 text-xs font-medium;
+  }
+
+  .divider-ornament {
+    @apply flex items-center gap-4 my-8;
+  }
+
+  .divider-ornament::before,
+  .divider-ornament::after {
+    @apply flex-1 h-px bg-gradient-to-r from-transparent via-border-strong to-transparent;
+  }
+
+  .divider-ornament span {
+    @apply text-foreground-muted text-sm font-serif italic;
+  }
+}
+
+@layer utilities {
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-fade-bottom {
+    mask-image: linear-gradient(to bottom, black 60%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent);
+  }
+
+  .gradient-fade-right {
+    mask-image: linear-gradient(to right, black 80%, transparent);
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent);
+  }
+}

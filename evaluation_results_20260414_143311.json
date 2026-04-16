@@ -1,0 +1,92 @@
+{
+  "timestamp": "2026-04-14T14:33:11.239432",
+  "document": "DICKSON SARPONG_AI Engineer.pdf",
+  "summary": {
+    "avg_faithfulness": 0.8,
+    "avg_relevance": 0.8,
+    "avg_overall": 0.8,
+    "grade": "B - GOOD"
+  },
+  "results": [
+    {
+      "question": "Who is Dickson Sarpong and what is his experience?",
+      "answer": "Dickson Sarpong is an AI engineer with experience in developing and deploying AI models, particularly in the areas of natural language processing and speech recognition. According to his profile, he can be reached at dicksonsarpong9@gmail.com or +233 555 732755, and is based in Kumasi, Ghana. His experience includes working as an AI Engineer Intern at VoiceBreeze AI from November 2025 to February 2026, where he developed low-latency, two-way conversational agents using the Gemini Live API via LiveKit, and integrated real-time audio streams via WebRTC and LiveKit. He also fine-tuned Nigerian-accent TTS models (VoxCPM, Spark-TTS 0.5B) on a 3.5-hour speech dataset segmented into 2,860 samples using Whisper, completing training in 6 hours on a Lambda H100 GPU. Additionally, he built and deployed the production inference service on Modal with H100-backed infrastructure, and designed the entire TTS pipeline from raw audio to training, including normalization, VAD segmentation, Whisper transcription, and LoRA fine-tuning. His technical competencies include proficiency in languages such as Python, and experience with technologies such as FastAPI, Modal, H100 GPU, WebRTC, LiveKit, and Docker. He has also worked with various AI models, including VoxCPM, Spark-TTS, and LoRA, and has experience with containerization, autoscaling, and streaming support. Furthermore, he has implemented hybrid retrieval using semantic search and BM25 with reranking, and has designed gateway APIs integrating AI services with external enterprise APIs and data systems. His achievements include reducing client integration complexity by 75%, and improving retrieval precision and reducing hallucinations. He has also tracked latency, request traces, and cost per request using LangSmith, and has deployed containerized ML services using Docker on AWS GPU infrastructure with autoscaling and streaming support.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer accurately reflects the information provided in the context, with no claims not supported by the context, hallucinated information, or misinterpretation of context. The answer directly addresses the question, is focused on the query, and provides a clear and complete overview of Dickson Sarpong's experience and technical competencies."
+      }
+    },
+    {
+      "question": "What technical skills does Dickson have?",
+      "answer": "Dickson has a wide range of technical skills, including voice and audio technologies such as Gemini Live API, ElevenLabs, Deepgram, Whisper, and TTS Fine-tuning, with expertise in Automatic Speech Recognition and Livekit [Node ID: CORE SKILLS]. He is also skilled in LLMs, including Groq (llama-3.3-70b) and OpenAI APIs, as well as small language models [Node ID: CORE SKILLS]. Additionally, Dickson has experience with AI systems, including LLM agents, tool calling, prompt design, and Model Context Protocol (MCP) [Node ID: CORE SKILLS]. His skills in ML infrastructure include data processing, training pipelines, LoRA finetuning, and Model versioning [Node ID: CORE SKILLS]. Dickson is also proficient in RAG architectures, hybrid search, FAISS, Qdrant, ChromaDB, vector search, BM25 ranking, cross-encoder reranking, and similarity search [Node ID: CORE SKILLS]. Furthermore, he has experience with deployment technologies such as Docker, CI/CD (GitHub Actions), Railway, Modal, AWS (ECR, ECS, EC2) [Node ID: CORE SKILLS]. Dickson's skills in monitoring include Prometheus, Grafana, LangSmith (LLM observability), and OpenTelemetry [Node ID: CORE SKILLS]. He is also knowledgeable in reliability, with expertise in circuit breakers, retry logic, graceful degradation, and Safety guardrails [Node ID: CORE SKILLS]. In terms of evaluation and reliability, Dickson is skilled in LangSmith, Hallucination tracking, Circuit breakers, RAG evaluation, and Weight and Biases [Node ID: CORE SKILLS]. As an AI Engineer, Dickson has a proven track record in reducing p99 latency by 73% in his previous work and deploying autonomous agentic workflows using LangGraph, Groq API, and Gemini Live API [Node ID: SUMMARY].",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer is a direct copy of the context, listing all the technical skills mentioned, making it faithful, relevant, and grounded."
+      }
+    },
+    {
+      "question": "What projects has Dickson worked on?",
+      "answer": "Dickson has worked on a project as an AI Engineer Intern at VoiceBreeze AI from November 2025 to February 2026. During this project, he developed low-latency, two-way conversational agents using the Gemini Live API via LiveKit, implementing multimodal (Audio/Text) interactions. He also integrated real-time audio streams via WebRTC and LiveKit, ensuring sub-500ms processing for live voice-over-IP (VoIP) interactions. Additionally, Dickson fine-tuned Nigerian-accent TTS models (VoxCPM, Spark-TTS 0.5B) on a 3.5-hour speech dataset segmented into 2,860 samples using Whisper, completing training in 6 hours on a Lambda H100 GPU. He built and deployed the production inference service on Modal with H100-backed infrastructure and designed the entire TTS pipeline from raw audio to training, including normalization, VAD segmentation, Whisper transcription, and LoRA fine-tuning. Furthermore, Dickson built FastAPI inference services for streaming and batch generation, voice cloning, and tunable latency vs quality settings depending on the request. He collaborated directly with the organization founder to design gateway APIs that reduced client integration complexity by 75% and added mixed precision and GPU warm-start strategies to avoid cold start penalties. Dickson also deployed multilingual speech-to-text for Hausa, Yoruba, and Igbo with request routing, retries, circuit breakers, and rate limiting so the service stays stable under load. He implemented hybrid retrieval using semantic search and BM25 with reranking to improve retrieval precision and reduce hallucinations. Moreover, Dickson designed gateway API integrating AI services with external enterprise APIs and data systems, reducing client integration complexity from 4 endpoints to 1. He tracked latency, request traces, and cost per request using LangSmith and deployed containerized ML services using Docker on AWS GPU infrastructure with autoscaling and streaming support. Dickson also integrated CI/CD pipelines for model versioning, deployment, and rollback and authored internal technical documentation and reference implementations for FastAPI inference services to streamline AI adoption for software engineers. Lastly, he designed modular AI integrations using LangGraph and MCP, ensuring the system remains provider-agnostic and capable of swapping LLM backends (e.g., OpenAI, Groq) with minimal reconfiguration.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer is a direct summary of the context provided, accurately describing Dickson's work as an AI Engineer Intern at VoiceBreeze AI."
+      }
+    },
+    {
+      "question": "What is the document about overall?",
+      "answer": "The document is about the professional experience and accomplishments of Dickson Sarpong, specifically his work as an AI Engineer Intern at VoiceBreeze AI from November 2025 to February 2026. During this period, he developed low-latency conversational agents using the Gemini Live API via LiveKit, integrated real-time audio streams via WebRTC and LiveKit, and fine-tuned Nigerian-accent TTS models. He also built and deployed production inference services, designed TTS pipelines, and implemented hybrid retrieval using semantic search and BM25 with reranking. Additionally, he collaborated with the organization founder to design gateway APIs, deployed multilingual speech-to-text, and tracked latency, request traces, and cost per request using LangSmith. Furthermore, he worked on automated repository analysis using structured parsing before LLM reasoning, implemented sandboxed GitHub access, and built governance and safety mechanisms for secure LLM interaction with untrusted code. The document highlights his technical competencies, including proficiency in languages such as Python, and experience with technologies like FastAPI, Docker, AWS, and GitHub.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer accurately summarizes the document, highlighting Dickson Sarpong's professional experience and accomplishments as an AI Engineer Intern at VoiceBreeze AI, and is well-supported by the provided context."
+      }
+    },
+    {
+      "question": "What programming languages is Dickson proficient in?",
+      "answer": "The context does not explicitly mention the programming languages Dickson is proficient in. However, it highlights his core skills in various areas such as Voice & Audio, LLMs, AI Systems, ML infrastructure, RAG, Deployment, Monitoring, Reliability, and Evaluation & Reliability. These skills suggest that Dickson has expertise in technologies like Gemini Live API, ElevenLabs, Deepgram, Whisper, TTS Fine-tuning, Automatic Speech Recognition, Livekit, Groq, OpenAI APIs, Small Language models, LLM agents, tool calling, prompt design, Model Context Protocol (MCP), Data processing, training pipelines, LoRA finetuning, Model versioning, RAG architectures, hybrid search, FAISS, Qdrant, ChromaDB, vector search, BM25 ranking, cross-encoder reranking, similarity search, Docker, CI/CD (GitHub Actions), Railway, Modal, AWS(ECR, ECS, EC2), Prometheus, Grafana, LangSmith, OpenTelemetry, Circuit breakers, retry logic, graceful degradation, Safety guardrails, LangSmith, Hallucination tracking, Circuit breakers, RAG evaluation, and Weight and Biases.",
+      "evaluation": {
+        "faithful": false,
+        "relevant": false,
+        "grounded": false,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 0.0,
+        "relevance_score": 0.0,
+        "overall_score": 0.0,
+        "explanation": ""
+      }
+    }
+  ]
+}

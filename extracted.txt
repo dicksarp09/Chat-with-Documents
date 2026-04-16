@@ -1,0 +1,1753 @@
+DICK SON SARPONG 
+dicksonsarpong9@gmail.com | +233 555 732755 | Kumasi, Ghana | GitHub | LinkedIn 
+SUMMAR Y 
+AI Engineer specializ ed in Retrieval systems, Agentic systems, real-time voice agents and low-latency 
+LLM
+ 
+systems.
+ 
+Proven
+ 
+track
+ 
+record
+ 
+in
+ 
+reducing
+ 
+p99
+ 
+latency
+ 
+by
+ 
+73
+%
+ 
+in
+ 
+my
+ 
+previous
+ 
+work
+ 
+and
+ 
+deplo ying
+ 
+autonomous
+ 
+agentic
+ 
+workflo ws
+ 
+using
+ 
+LangGr aph,
+ 
+Groq
+ 
+API
+ 
+and
+ 
+Gemini
+ 
+Live
+ 
+API.
+ 
+CORE SKILLS 
+●
+ 
+Voice
+ 
+&
+ 
+Audio
+:
+ 
+Gemini
+ 
+Live
+ 
+API,
+ 
+ElevenLab s,
+ 
+Deepgr am,
+ 
+Whisper ,
+ 
+TTS
+ 
+Fine-tuning ,
+ 
+Automa tic
+ 
+Speech
+ 
+Recognition,
+ 
+Livekit
+ 
+●
+ 
+LLMs:
+ 
+Groq
+ 
+(llama-3.3-70b),
+ 
+OpenAI
+ 
+APIs,
+ 
+Small
+ 
+Languag e
+ 
+models
+ 
+●
+ 
+AI
+ 
+Systems:
+  
+LLM
+ 
+agents,
+ 
+tool
+ 
+calling ,
+ 
+promp t
+ 
+design,
+ 
+Model
+ 
+Context
+ 
+Protocol
+ 
+(MCP)
+ 
+●
+ 
+ML
+ 
+infrastructur e:
+ 
+Data
+ 
+processing ,
+ 
+training
+ 
+pipelines,
+ 
+LoRA
+ 
+finetuning ,
+ 
+Model
+ 
+versioning
+ 
+●
+ 
+RAG:
+ 
+RAG
+ 
+architectur es,
+ 
+hybrid
+ 
+sear ch,
+ 
+FAISS,
+ 
+Qdrant,
+ 
+ChromaDB ,
+ 
+vector
+ 
+sear ch,
+ 
+BM25
+ 
+ranking ,
+ 
+cross-enc oder
+ 
+reranking ,
+ 
+similarity
+ 
+sear ch
+ 
+●
+ 
+Deplo ymen t:
+ 
+Dock er,
+ 
+CI/CD
+ 
+(GitHub
+ 
+Actions),
+ 
+Railw ay,
+ 
+Modal,
+ 
+AWS(ECR,
+ 
+ECS,
+ 
+EC2)
+ 
+●
+ 
+Monit oring:
+ 
+Prome theus,
+ 
+Grafana,
+ 
+LangSmith
+ 
+(LLM
+ 
+observability),
+ 
+OpenT eleme try
+ 
+ 
+●
+ 
+Reliability:
+ 
+Circuit
+ 
+breakers,
+ 
+retry
+ 
+logic,
+ 
+graceful
+ 
+degr adation,
+ 
+Safety
+ 
+guar drails
+ 
+●
+ 
+Evalua tion
+ 
+&
+ 
+Reliability
+:
+ 
+LangSmith,
+ 
+Hallucina tion
+ 
+tracking ,
+ 
+Circuit
+ 
+breakers,
+ 
+RAG
+ 
+evalua tion,
+ 
+Weigh t
+ 
+and
+ 
+Biases
+ 
+EXPERIENCE AI Engineer Intern | VoiceBr eeze AI| Remot e                                        November 2025 - Februar y 2026 
+●
+ 
+Developed
+ 
+low-latency ,
+ 
+two-way
+ 
+conversational
+ 
+agents
+ 
+using
+ 
+the
+ 
+Gemini
+ 
+Live
+ 
+AP
+I
+ 
+via
+ 
+LiveKit,
+ 
+implemen ting
+ 
+multimodal
+ 
+(Audio/T ext)
+ 
+interactions
+ 
+●
+ 
+Integrated
+ 
+real-time
+ 
+audio
+ 
+streams
+ 
+via
+ 
+WebRTC
+ 
+and
+ 
+LiveKit,
+ 
+ensuring
+ 
+sub-500ms
+ 
+processing
+ 
+for
+ 
+live
+ 
+voice-o ver-IP
+ 
+(VoIP)
+ 
+interactions
+ 
+●
+ 
+Fine-tuned
+ 
+Nigerian-accen t
+ 
+TTS
+ 
+models
+ 
+(VoxCPM,
+ 
+Spark -TTS
+ 
+0.5B)
+ 
+on
+ 
+a
+ 
+3.5-hour
+ 
+speech
+ 
+dataset
+ 
+segmen ted
+ 
+into
+ 
+2,860
+ 
+samples
+ 
+using
+ 
+Whisper ,
+ 
+comple ting
+ 
+training
+ 
+in
+ 
+6
+ 
+hour s
+ 
+on
+ 
+a
+ 
+Lambda
+ 
+H100
+ 
+GPU .
+ 
+●
+ 
+Built
+ 
+and
+ 
+deplo yed
+ 
+the
+ 
+production
+ 
+inference
+ 
+service
+ 
+on
+ 
+Modal
+ 
+with
+ 
+H100-back ed
+ 
+infrastructur e.
+ 
+●
+ 
+Designed
+ 
+the
+ 
+entire
+ 
+TTS
+ 
+pipeline
+ 
+from
+ 
+raw
+ 
+audio
+ 
+to
+ 
+training ,
+ 
+including
+ 
+normaliz ation,
+ 
+VAD
+ 
+segmen tation,
+ 
+Whisper
+ 
+transcrip tion,
+ 
+and
+ 
+LoRA
+ 
+fine-tuning.
+ 
+●
+ 
+Built
+ 
+FastAPI
+ 
+inference
+ 
+services
+ 
+for
+ 
+streaming
+ 
+and
+ 
+batch
+ 
+gener ation,
+ 
+voice
+ 
+cloning ,
+ 
+and
+ 
+tunable
+ 
+latency
+ 
+vs
+ 
+quality
+ 
+settings
+ 
+depending
+ 
+on
+ 
+the
+ 
+reques t.
+ 
+●
+ 
+Collabor ated
+ 
+directly
+ 
+with
+ 
+the
+ 
+organization
+ 
+founder
+ 
+to
+ 
+design
+ 
+gateway
+ 
+APIs
+ 
+that
+ 
+reduced
+ 
+clien t
+ 
+integration
+ 
+comple xity
+ 
+by
+ 
+75%
+ 
+and
+ 
+added
+ 
+mixed
+ 
+precision
+ 
+and
+ 
+GPU
+ 
+warm-s tart
+ 
+strategies
+ 
+to
+ 
+avoid
+ 
+cold
+ 
+start
+ 
+penalties.
+ 
+●
+ 
+Deplo yed
+ 
+multilingual
+ 
+speech-t o-text
+ 
+for
+ 
+Hausa,
+ 
+Yoruba,
+ 
+and
+ 
+Igbo
+ 
+with
+ 
+reques t
+ 
+routing ,
+ 
+retries,
+ 
+circuit
+ 
+breakers,
+ 
+and
+ 
+rate
+ 
+limiting
+ 
+so
+ 
+the
+ 
+service
+ 
+stays
+ 
+stable
+ 
+under
+ 
+load
+ 
+●
+ 
+Implemen ted
+ 
+hybrid
+ 
+retrieval
+ 
+using
+ 
+seman tic
+ 
+sear ch
+ 
+and
+ 
+BM25
+ 
+with
+ 
+reranking
+ 
+to
+ 
+impr ove
+ retrieval precision and reduce hallucina tions 
+●
+ 
+Designed
+ 
+gateway
+ 
+API
+ 
+integrating
+ 
+AI
+ 
+services
+ 
+with
+ 
+external
+ 
+enterprise
+ 
+APIs
+ 
+and
+ 
+data
+ 
+systems,
+ 
+reducing
+ 
+clien t
+ 
+integration
+ 
+comple xity
+ 
+from
+ 
+4
+ 
+endpoin ts
+ 
+to
+ 
+1.
+ 
+●
+ 
+Tracked
+ 
+latency ,
+ 
+reques t
+ 
+traces,
+ 
+and
+ 
+cost
+ 
+per
+ 
+reques t
+ 
+using
+ 
+LangSmith.
+ 
+●
+ 
+Deplo yed
+ 
+containeriz ed
+ 
+ML
+ 
+services
+ 
+using
+ 
+Dock er
+ 
+on
+ 
+AWS
+ 
+GPU
+ 
+infrastructur e
+ 
+with
+ 
+autoscaling
+ 
+and
+ 
+streaming
+ 
+support
+ 
+●
+ 
+Integrated
+ 
+CI/CD
+ 
+pipelines
+ 
+for
+ 
+model
+ 
+versioning ,
+ 
+deplo ymen t,
+ 
+and
+ 
+rollback
+ 
+●
+ 
+Author ed
+ 
+internal
+ 
+technic al
+ 
+documen tation
+ 
+and
+ 
+reference
+ 
+implemen tations
+ 
+for
+ 
+FastAPI
+ 
+inference
+ 
+services
+ 
+to
+ 
+streamline
+ 
+AI
+ 
+adop tion
+ 
+for
+ 
+softw are
+ 
+engineer s.
+ 
+●
+ 
+Designed
+ 
+modular
+ 
+AI
+ 
+integrations
+ 
+using
+ 
+LangGr aph
+ 
+and
+ 
+MCP ,
+ 
+ensuring
+ 
+the
+ 
+system
+ 
+remains
+ 
+provider -agnos tic
+ 
+and
+ 
+capable
+ 
+of
+ 
+swapping
+ 
+LLM
+ 
+back ends
+ 
+(e.g.,
+ 
+OpenAI,
+ 
+Groq)
+ 
+with
+ 
+minimal
+ 
+reconfigur ation
+ 
+  
+PROJECTS 
+Hybrid Enterprise RAG System   GitHub | 
+●
+ 
+Built
+ 
+hybrid
+ 
+RAG
+ 
+merging
+ 
+SQL
+ 
+analy tics,
+ 
+time-series
+ 
+forecasting,
+ 
+and
+ 
+unstructur ed
+ 
+retrieval
+ 
+●
+ 
+Implemen ted
+ 
+hybrid
+ 
+sear ch
+ 
+(60%
+ 
+vector,
+ 
+40%
+ 
+BM25)
+ 
+with
+ 
+cross-enc oder
+ 
+re-ranking ,
+ 
+impr oving
+ 
+Recall@10
+ 
+from
+ 
+0.78
+ 
+to
+ 
+0.92
+ 
+●
+ 
+Configur ed
+ 
+circuit
+ 
+breakers,
+ 
+timeout
+ 
+thresholds,
+ 
+and
+ 
+graceful
+ 
+degr adation
+ 
+routers
+ 
+to
+ 
+isola te
+ 
+componen t
+ 
+failur es
+ 
+●
+ 
+Built
+ 
+feedback
+ 
+APIs,
+ 
+failur e
+ 
+dashboar ds,
+ 
+and
+ 
+activ e
+ 
+learning
+ 
+queues
+ 
+that
+ 
+route
+ 
+LLM
+ 
+errors
+ 
+to
+ 
+human-in-the-loop
+ 
+review
+ 
+●
+ 
+Metrics:
+ 
+100%
+ 
+SQL
+ 
+exact
+ 
+match,
+ 
+11.02%
+ 
+forecast
+ 
+MAPE,
+ 
+0.98
+ 
+faithfulness,
+ 
+1.5%
+ 
+hallucina tion
+ 
+rate
+ 
+●
+ 
+Performance:
+ 
+p50
+ 
+2.62s,
+ 
+p95
+ 
+75.18s
+ 
+(ARIMA
+ 
+bottleneck
+ 
+iden tified),
+ 
+cost
+ 
+$0.0018
+ 
+per
+ 
+reques t
+ 
+●
+ 
+Iden tified
+ 
+ARIMA
+ 
+sync
+ 
+training
+ 
+as
+ 
+P95
+ 
+bottleneck;
+ 
+designed
+ 
+async
+ 
+solution
+ 
+(75s
+ 
+→
+ 
+<4s
+ 
+target)
+ 
+●
+ 
+Packaged
+ 
+the
+ 
+services
+ 
+in
+ 
+Dock er
+ 
+container s
+ 
+and
+ 
+configur ed
+ 
+a
+ 
+GitHub
+ 
+Actions
+ 
+CI/CD
+ 
+pipeline
+ 
+for
+ 
+automa ted
+ 
+testing
+ 
+and
+ 
+deplo ymen t
+ 
+APRIS - Autonomous Public Reposit ory Intellig ence System GitHub | 
+●
+ 
+Built
+ 
+automa ted
+ 
+reposit ory
+ 
+analy sis
+ 
+using
+ 
+structur ed
+ 
+parsing
+ 
+before
+ 
+LLM
+ 
+reasoning
+ 
+●
+ 
+Implemen ted
+ 
+sandbo xed
+ 
+GitHub
+ 
+access
+ 
+through
+ 
+MCP
+ 
+with
+ 
+rate
+ 
+limits
+ 
+●
+ 
+Implemen ted
+ 
+structur ed
+ 
+reposit ory
+ 
+analy sis
+ 
+using
+ 
+AST-inspir ed
+ 
+parsing
+ 
+techniques
+ 
+to
+ 
+extract
+ 
+functions,
+ 
+dependencies,
+ 
+and
+ 
+module
+ 
+relationship s
+ 
+before
+ 
+LLM
+ 
+reasoning ,
+ 
+impr oving
+ 
+context
+ 
+quality
+ 
+and
+ 
+reducing
+ 
+token
+ 
+usag e
+ 
+●
+ 
+Performance:
+ 
+<30s
+ 
+for
+ 
+77-file
+ 
+analy sis,
+ 
+cost
+ 
+~$0.05/r epo,
+ 
+86%
+ 
+confidence
+ 
+ 
+●
+ 
+Built
+ 
+governance
+ 
+and
+ 
+safety
+ 
+mechanisms
+ 
+including
+ 
+RBAC
+ 
+enforcemen t,
+ 
+promp t-injection
+ 
+sanitiz ation,
+ 
+token
+ 
+budg eting
+ 
+(100k
+ 
+max),
+ 
+and
+ 
+file
+ 
+size
+ 
+limits
+ 
+to
+ 
+ensur e
+ 
+secur e
+ 
+LLM
+ 
+interaction
+ 
+with
+ 
+untrusted
+ 
+code
+ 
+●
+ 
+Observed
+ 
+LLM
+ 
+gener ation
+ 
+latency:
+ 
+p50
+ 
+0.79s,
+ 
+p90
+ 
+1.78s,
+ 
+p95
+ 
+1.99s,
+ 
+p99
+ 
+2.15s
+ 
+ 
+●
+ 
+Average
+ 
+token
+ 
+consump tion:
+ 
+~934
+ 
+tokens
+ 
+per
+ 
+reques t
+ 
+  
+VoxCPM: Production-Gr ade Nigerian Accen t TTS Service [Github] 
+●
+ 
+Achie ved
+ 
+~10-20x
+ 
+real-time
+ 
+gener ation
+ 
+speed
+ 
+and
+ 
+<500ms
+ 
+first-byte
+ 
+latency
+ 
+for
+ 
+streaming
+ 
+audio
+ 
+by
+ 
+deplo ying
+ 
+a
+ 
+fine-tuned
+ 
+VoxCPM
+ 
+1.5
+ 
+model
+ 
+on
+ 
+H100
+ 
+GPU
+ 
+infrastructur e
+ 
+via
+ 
+Modal.
+ 
+●
+ 
+Engineer ed
+ 
+a
+ 
+scalable
+ 
+FastAPI
+ 
+inference
+ 
+service
+ 
+supporting
+ 
+non-s treaming ,
+ 
+streaming ,
+ 
+and
+ 
+batch
+ 
+processing
+ 
+with
+ 
+warm-s tart
+ 
+strategies
+ 
+to
+ 
+reduce
+ 
+container
+ 
+reuse
+ 
+latency
+ 
+to
+ 
+<1
+ 
+second.
+ 
+●
+ 
+Optimiz ed
+ 
+oper ational
+ 
+costs
+ 
+by
+ 
+implemen ting
+ 
+a
+ 
+5-minut e
+ 
+idle
+ 
+scale-do wn
+ 
+windo w
+ 
+and
+ 
+volume
+ 
+caching ,
+ 
+reducing
+ 
+mon thly
+ 
+H100
+ 
+overhead
+ 
+while
+ 
+main taining
+ 
+high
+ 
+availability .
+ 
+●
+ 
+Success fully
+ 
+adap ted
+ 
+a
+ 
+1.67
+ 
+GB
+ 
+base
+ 
+model
+ 
+for
+ 
+Nigerian
+ 
+English
+ 
+using
+ 
+LoRA
+ 
+(Rank
+ 
+64),
+ 
+targeting
+ 
+specific
+ 
+LM
+ 
+and
+ 
+DiT
+ 
+modules
+ 
+to
+ 
+ensur e
+ 
+accen t
+ 
+authen ticity .
+ 
+●
+ 
+Observability:
+ 
+Integrated
+ 
+Prome theus
+ 
+metrics
+ 
+and
+ 
+structur ed
+ 
+logging
+ 
+to
+ 
+track
+ 
+gener ation
+ 
+time,
+ 
+audio
+ 
+duration,
+ 
+and
+ 
+hardware
+ 
+utiliz ation
+ 
+in
+ 
+real-time
+ 
+ 
+SFT & DPO Fine-T uning Pipeline | Python, PyTorch, Hugging Face [GitHub link] 
+●
+ 
+Built
+ 
+production-gr ade
+ 
+fine-tuning
+ 
+pipelines
+ 
+for
+ 
+LLM
+ 
+alignmen t
+ 
+using
+ TinyLlama 
+●
+ 
+Implemen ted
+ 
+Super vised
+ 
+Fine-T uning
+ 
+(SFT)
+ 
+on
+ 
+instruction-r esponse
+ 
+pairs
+ 
+●
+ 
+Implemen ted
+ 
+Direct
+ 
+Preference
+ 
+Optimiz ation
+ 
+(DPO)
+ 
+for
+ 
+human
+ 
+alignmen t
+ 
+ 
+●
+ 
+Used
+ 
+LoRA
+ 
+and
+ 
+PEFT
+ 
+for
+ 
+efficien t
+ 
+training
+ 
+(reduced
+ 
+params
+ 
+by
+ 
+99%)
+ 
+ 
+●
+ 
+Tracked
+ 
+metrics:
+ 
+Training
+ 
+loss
+ 
+0.69
+ 
+→
+ 
+0.56
+ 
+(19%
+ 
+impr ovemen t)
+ 
+●
+ 
+Tech:
+ 
+Hugging
+ 
+Face
+ 
+Transformer s,
+ 
+LoRA ,
+ 
+PEFT ,
+ 
+Weigh ts
+ 
+&
+ 
+Biases
+ 
+●
+ 
+Merged
+ 
+adap ters
+ 
+with
+ 
+base
+ 
+models
+ 
+for
+ 
+deplo ymen t-ready
+ 
+inference
+ 
+-
+ 
+Valida ted
+ 
+output
+ 
+quality
+ 
+through
+ 
+systema tic
+ 
+testing
+ 
+ 
+EDUCA TION 
+Bachelor
+ 
+of
+ 
+Science
+ 
+in
+ 
+Statistics
+ 
+ 
+Kwame
+ 
+Nkrumah
+ 
+Univ ersity
+ 
+of
+ 
+Science
+ 
+and
+ 
+Technology
+                      
+|
+ 
+Augus t
+ 
+2018
+ 
+–
+ 
+November
+ 
+2022
+ 
+Kumasi-Ghana 

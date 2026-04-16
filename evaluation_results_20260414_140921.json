@@ -1,0 +1,99 @@
+{
+  "timestamp": "2026-04-14T14:09:21.433301",
+  "document": "DICKSON SARPONG_AI Engineer.pdf",
+  "summary": {
+    "avg_faithfulness": 1.0,
+    "avg_relevance": 1.0,
+    "avg_overall": 0.9400000000000001,
+    "grade": "A - EXCELLENT"
+  },
+  "results": [
+    {
+      "question": "Who is Dickson Sarpong and what is his experience?",
+      "answer": "Dickson Sarpong is an AI Engineer with experience in developing low-latency conversational agents, fine-tuning language models, and deploying scalable AI services.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [
+          "specific details about his experience at VoiceBreeze AI",
+          "technical skills and accomplishments"
+        ],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 0.9,
+        "explanation": "The answer is faithful to the context, directly addresses the question, and is grounded in the provided information. However, it lacks specific details about Dickson Sarpong's experience and accomplishments."
+      }
+    },
+    {
+      "question": "What technical skills does Dickson have?",
+      "answer": "Dickson has technical skills in Voice & Audio, LLMs, AI Systems, ML infrastructure, RAG, Deployment, Monitoring, Reliability, and Evaluation & Reliability.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer directly addresses the question and is fully supported by the provided context, listing the technical skills mentioned in the CORE SKILLS section."
+      }
+    },
+    {
+      "question": "What projects has Dickson worked on?",
+      "answer": "Dickson has worked on a project at VoiceBreeze AI as an AI Engineer Intern.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [
+          "specific details about the project, such as the technologies used and accomplishments"
+        ],
+        "issues": [
+          "lack of detail in the answer"
+        ],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 0.8,
+        "explanation": "The answer is faithful to the context, directly addresses the question, and is grounded in the provided information. However, it lacks specific details about the project."
+      }
+    },
+    {
+      "question": "What is the document about overall?",
+      "answer": "The document is about the author's experience and accomplishments as an AI Engineer Intern at VoiceBreeze AI, focusing on developing and deploying various AI-related projects and technologies.",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer accurately summarizes the content of the document, which describes the author's experience and accomplishments as an AI Engineer Intern at VoiceBreeze AI."
+      }
+    },
+    {
+      "question": "What programming languages is Dickson proficient in?",
+      "answer": "Not explicitly mentioned",
+      "evaluation": {
+        "faithful": true,
+        "relevant": true,
+        "grounded": true,
+        "hallucinations": [],
+        "missing_info": [],
+        "issues": [],
+        "faithfulness_score": 1.0,
+        "relevance_score": 1.0,
+        "overall_score": 1.0,
+        "explanation": "The answer is faithful, relevant, and grounded because it accurately reflects the context, which does not mention Dickson's programming languages."
+      }
+    }
+  ]
+}

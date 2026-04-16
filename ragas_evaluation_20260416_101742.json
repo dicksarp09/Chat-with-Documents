@@ -1,0 +1,64 @@
+{
+  "timestamp": "2026-04-16T10:17:42.854490",
+  "document": "22705iied.pdf",
+  "query_count": 5,
+  "aggregate": {
+    "context_precision": 0.38849414009129324,
+    "context_recall": 1.0,
+    "faithfulness": 0.7,
+    "answer_relevance": 0.6,
+    "overall": 0.6815482420273878
+  },
+  "per_query": [
+    {
+      "query": "What is this document about?",
+      "metrics": {
+        "context_precision": 0.354952208778817,
+        "context_recall": 1.0,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.6,
+        "overall": 0.6714856626336451
+      }
+    },
+    {
+      "query": "What methodology was used?",
+      "metrics": {
+        "context_precision": 0.4021167492942294,
+        "context_recall": 1.0,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.6,
+        "overall": 0.6856350247882688
+      }
+    },
+    {
+      "query": "Who are the authors?",
+      "metrics": {
+        "context_precision": 0.4730649567823949,
+        "context_recall": 1.0,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.6,
+        "overall": 0.7069194870347184
+      }
+    },
+    {
+      "query": "What are the main findings?",
+      "metrics": {
+        "context_precision": 0.37985668729985766,
+        "context_recall": 1.0,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.6,
+        "overall": 0.6789570061899572
+      }
+    },
+    {
+      "query": "What recommendations are made?",
+      "metrics": {
+        "context_precision": 0.33248009830116726,
+        "context_recall": 1.0,
+        "faithfulness": 0.7,
+        "answer_relevance": 0.6,
+        "overall": 0.66474402949035
+      }
+    }
+  ]
+}
