@@ -20,10 +20,9 @@ services:
     buildCommand: cd frontend && npm install && npm run build
     startCommand: cd frontend && npm start
     envVars:
-      - key: API_URL
-        value: https://chat-docs-api.onrender.com
-      - key: WS_URL
-        value: wss://chat-docs-api.onrender.com
-    fromService:
-      name: chat-docs-api
-      envVarKey: RENDER_INTERNAL_HOSTNAME
+      - key: NEXT_PUBLIC_API_URL
+        value: https://chat-with-documents-1chi.onrender.com/api/v1
+      - key: NEXT_PUBLIC_WS_URL
+        value: wss://chat-with-documents-1chi.onrender.com
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://chat-docs-web.onrender.com
