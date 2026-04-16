@@ -88,91 +88,57 @@ Objective quality measurement:
 
 ## Architecture Overview
 
-```mermaid
-graph TB
-    subgraph Client["Client Layer"]
-        F["Next.js Frontend<br/>Port 3000/3001"]
-    end
-    
-    subgraph Backend["FastAPI Backend - Port 8000"]
-        subgraph Routes["API Routes"]
-            U["/api/v1/upload"]
-            Q["/api/v1/query"]
-            D["/api/v1/datasets"]
-            W["/ws/query/{id}"]
-        end
-        
-        subgraph Engines["Engines"]
-            DE["Document Engine<br/>PDF/DOCX"]
-            CE["CSV Engine<br/>Data Analytics"]
-        end
-        
-        subgraph Pipeline["Processing Pipeline"]
-            P["Parsers<br/>PDF, DOCX"]
-            C["Chunking<br/>Hierarchical"]
-            E["Embeddings<br/>Sentence-Transformers"]
-            S["Storage<br/>FAISS + BM25"]
-            R["Retrieval<br/>Hybrid + Rerank"]
-            CO["Compression<br/>Query-aware"]
-            L["LLM<br/>Groq LLaMA"]
-            V["Validation<br/>Pydantic"]
-        end
-        
-        subgraph Eval["Evaluation"]
-            J["LLM-as-Judge"]
-        end
-    end
-    
-    F --> Routes
-    U --> DE
-    Q --> R
-    R --> CO
-    CO --> L
-    
-    DE --> P
-    P --> C
-    C --> E
-    E --> S
-    
-    CE --> E
-    CE --> L
-    
-    R --> J
-end
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Next.js Frontend (Port 3000)            │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    FastAPI Backend (Port 8000)             │
+├─────────────────────────────────────────────────────────────┤
+│  API Routes: /upload, /query, /datasets, /ws/query       │
+├─────────────────────────────────────────────────────────────┤
+│  Engines:              │  Pipeline:                        │
+│  ├─ Document Engine   │  ├─ Parsers (PDF, DOCX)        │
+│  └─ CSV Engine       │  ├─ Chunking (Hierarchical)      │
+│                       │  ├─ Embeddings (Sentence-Trans)   │
+│                       │  ├─ Storage (FAISS + BM25)       │
+│                       │  ├─ Retrieval (Hybrid + Rerank)   │
+│                       │  ├─ Compression (Query-aware)     │
+│                       │  ├─ LLM (Groq LLaMA)            │
+│                       │  └─ Validation (Pydantic)        │
+├─────────────────────────────────────────────────────────────┤
+│  Evaluation: LLM-as-Judge                                  │
+└─────────────────────────────────────────────────────────────┘
 ```
 
 ### Document Processing Flow
 
-```mermaid
-flowchart LR
-    A["File Upload<br/>PDF/DOCX/CSV"] --> B["Parser"]
-    B --> C["Chunking"]
-    C --> D["Embedder"]
-    D --> E["Vector Store"]
-    E --> F["FAISS + BM25 Index"]
-    
-    subgraph Ingest["Ingestion Pipeline"]
-    direction TB
-    B --> C
-    C --> D
-    D --> E
-    end
+```
+Upload PDF/DOCX/CSV
+        │
+        ▼
+┌─────────────┐     ┌──────────┐     ┌───────────┐     ┌──────────┐
+│   Parser   │ ──► │ Chunking │ ──► │ Embedder │ ──► │  Store  │
+└─────────────┘     └──────────┘     └───────────┘     └──────────┘
+                                                         │
+                                                         ▼
+                                                  FAISS + BM25 Index
 ```
 
 ### Query Processing Flow
 
-```mermaid
-flowchart LR
-    Q["User Query"] --> R["Hybrid Retriever"]
-    R --> RE["Reranker"]
-    RE --> CO["Compressor"]
-    CO --> L["LLM Reasoning"]
-    L --> A["Answer + Sources"]
-    
-    subgraph Query["Query Pipeline"]
-    direction TB
-    R --> RE --> CO --> L
-    end
+```
+User Query
+    │
+    ▼
+┌───────────────┐     ┌──────────┐     ┌────────────┐     ┌──────┐
+│   Hybrid    │ ──► │ Reranker │ ──► │ Compressor│ ──► │ LLM │
+│   Retriever │     └──────────┘     └────────────┘     └──────┘
+└───────────────┘                               │
+                                                ▼
+                                         Answer + Sources
 ```
 
 ---
