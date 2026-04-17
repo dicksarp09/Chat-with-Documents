@@ -1,5 +1,14 @@
 # Document Intelligence Engine
 
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Groq](https://img.shields.io/badge/Groq-FF6B00?style=flat)](https://groq.com/)
+[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)](https://python.org/)
+
+A production-grade RAG system...
+
+# Document Intelligence Engine
+
 A production-grade RAG (Retrieval-Augmented Generation) system for analyzing documents and CSV files using natural language. Built with FastAPI, Next.js, and Groq LLaMA.
 
 ---
@@ -31,6 +40,11 @@ A production-grade RAG system that addresses each challenge:
 **Key Innovation**: Query-aware compression + hierarchical chunking + hybrid retrieval working together to maintain both recall and precision while staying within context limits.
 
 ---
+## Demo
+
+![Document Intelligence Demo](demo.gif)
+
+*Upload PDF → Ask question → Get answer with sources (600ms latency)*
 
 ## Key Innovations
 
