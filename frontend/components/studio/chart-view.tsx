@@ -60,7 +60,8 @@ export function ChartView({ charts, className }: ChartViewProps) {
           )}
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              {chart.type === 'bar' ? (
+              <>
+                {chart.type === 'bar' ? (
                 <BarChart data={chart.data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
                   <XAxis
@@ -147,11 +148,14 @@ export function ChartView({ charts, className }: ChartViewProps) {
                       fontFamily: 'inherit',
                     }}
                   />
-                  <Scatter data={chart.data} fill="#D97706" />
+<Scatter data={chart.data} fill="#D97706" />
                 </ScatterChart>
-              ) : null}
-            </ResponsiveContainer>
-          </div>
+              ) : (
+                <></>
+              )}
+            </>
+          </ResponsiveContainer>
+        </div>
         </div>
       ))}
     </div>
