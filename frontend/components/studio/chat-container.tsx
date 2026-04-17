@@ -247,7 +247,7 @@ export function ChatContainer({ datasets, selectedDataset, onSelectDataset }: Ch
                   {message.charts && message.charts.length > 0 && !message.isStreaming && (
                     <div className="space-y-4">
                       {message.charts.map((chart, i) => (
-                        <ChartView key={i} chart={chart} />
+                        <ChartView key={i} charts={[chart]} />
                       ))}
                     </div>
                   )}

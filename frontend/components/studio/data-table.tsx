@@ -10,7 +10,8 @@ interface DataTableProps {
 }
 
 export function DataTable({ data, maxRows = 10, className }: DataTableProps) {
-  const { columns, rows } = data
+  const columns = data.columns || data.headers || []
+  const rows = data.rows || []
   const displayedRows = rows.slice(0, maxRows)
   const hasMore = rows.length > maxRows
 
