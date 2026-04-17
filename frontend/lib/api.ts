@@ -47,6 +47,7 @@ export interface StreamingMessage {
   type: 'chunk' | 'complete' | 'error'
   content?: string
   error?: string
+  data?: any
 }
 
 export interface ChatMessage {
@@ -122,7 +123,9 @@ export function useApiUrl() {
 
 export function createQueryWebSocket(
   datasetId: string,
-  onMessage: (data: StreamingMessage) => void
+  onChunk?: (data: StreamingMessage) => void,
+  onComplete?: (data: StreamingMessage) => void,
+  onError?: (error: any) => void
 ): WebSocket {
   const url = `${WS_URL}/ws/query/${datasetId}`
   const ws = new WebSocket(url)
@@ -134,7 +137,13 @@ export function createQueryWebSocket(
   ws.onmessage = (event) => {
     try {
       const data = JSON.parse(event.data) as StreamingMessage
-      onMessage(data)
+      
+      // Route to appropriate callback based on type
+      if (data.type === 'chunk' && onChunk) {
+        onChunk(data)
+      } else if (data.type === 'complete' && onComplete) {
+        onComplete(data)
+      }
     } catch (e) {
       console.error('Failed to parse WebSocket message:', e)
     }
@@ -142,7 +151,7 @@ export function createQueryWebSocket(
 
   ws.onerror = (error) => {
     console.error('WebSocket error:', error)
-    onMessage({ type: 'error', error: 'Connection error' })
+    if (onError) onError(error)
   }
 
   ws.onclose = () => {

@@ -15,59 +15,44 @@ export function useWebSocket(datasetId: string) {
 
     const ws = createQueryWebSocket(
       datasetId,
+      // onChunk
       (data: StreamingMessage) => {
-        if (data.type === 'chunk') {
-          setIsStreaming(true)
-          setMessages(prev => {
-            const last = prev[prev.length - 1]
-            if (last && last.role === 'assistant' && last.isStreaming) {
-              return [
-                ...prev.slice(0, -1),
-                { ...last, content: last.content + (data.content || '') }
-              ]
-            }
-            return prev
-          })
-        } else if (data.type === 'complete' && data.data) {
-          setIsStreaming(false)
-          setMessages(prev => {
-            const last = prev[prev.length - 1]
-            if (last && last.role === 'assistant') {
-              return [
-                ...prev.slice(0, -1),
-                {
-                  ...last,
-                  content: data.data?.response?.chat?.answer || data.data?.response?.answer || last.content,
-                  isStreaming: false,
-                  sources: data.data?.response?.sources,
-                  tables: data.data?.response?.tables,
-                  charts: data.data?.response?.plots,
-                  insights: data.data?.response?.insights?.map(i => i.text),
-                }
-              ]
-            }
-            return prev
-          })
-        } else if (data.type === 'error') {
-          setIsStreaming(false)
-          setMessages(prev => [
-            ...prev,
-            {
-              id: `error-${messageIdRef.current++}`,
-              role: 'assistant',
-              content: `Error: ${data.error}`,
-              timestamp: new Date(),
-              isStreaming: false,
-            }
-          ])
-        }
+        setIsStreaming(true)
+        setMessages(prev => {
+          const last = prev[prev.length - 1]
+          if (last && last.role === 'assistant' && last.isStreaming) {
+            return [
+              ...prev.slice(0, -1),
+              { ...last, content: last.content + (data.content || '') }
+            ]
+          }
+          return prev
+        })
       },
-      (error) => {
-        console.error('WebSocket error:', error)
-        setIsConnected(false)
+      // onComplete
+      (data: StreamingMessage) => {
         setIsStreaming(false)
+        setMessages(prev => {
+          const last = prev[prev.length - 1]
+          if (last && last.role === 'assistant' && data.data) {
+            return [
+              ...prev.slice(0, -1),
+              {
+                ...last,
+                content: data.data?.response?.chat?.answer || data.data?.response?.answer || last.content,
+                tables: data.data?.response?.tables,
+                charts: data.data?.response?.plots,
+                insights: data.data?.response?.insights?.map((i: { text: string }) => i.text),
+                sources: data.data?.response?.sources,
+              }
+            ]
+          }
+          return prev
+        })
       },
-      () => {
+      // onError
+      (error: any) => {
+        console.error('WebSocket error:', error)
         setIsConnected(false)
         setIsStreaming(false)
       }
@@ -77,39 +62,31 @@ export function useWebSocket(datasetId: string) {
     setIsConnected(true)
 
     return () => {
-      ws.close()
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.close()
+      }
       wsRef.current = null
       setIsConnected(false)
     }
   }, [datasetId])
 
-  const sendQuery = useCallback((query: string) => {
-    const id = `msg-${messageIdRef.current++}`
-    
-    setMessages(prev => [
-      ...prev,
-      {
-        id,
-        role: 'user',
-        content: query,
-        timestamp: new Date(),
-      }
-    ])
+  const sendMessage = useCallback(async (query: string) => {
+    const messageId = ++messageIdRef.current
+    const userMessage: ChatMessage = {
+      role: 'user',
+      content: query,
+    }
+    const assistantMessage: ChatMessage = {
+      role: 'assistant',
+      content: '',
+      isStreaming: true,
+    }
 
-    setTimeout(() => {
-      setMessages(prev => [
-        ...prev,
-        {
-          id: `assistant-${messageIdRef.current++}`,
-          role: 'assistant',
-          content: '',
-          timestamp: new Date(),
-          isStreaming: true,
-        }
-      ])
-    }, 50)
+    setMessages(prev => [...prev, userMessage, assistantMessage])
 
-    wsRef.current?.sendQuery(query)
+    if (wsRef.current?.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({ query }))
+    }
   }, [])
 
   const clearMessages = useCallback(() => {
@@ -120,7 +97,7 @@ export function useWebSocket(datasetId: string) {
     messages,
     isConnected,
     isStreaming,
-    sendQuery,
+    sendMessage,
     clearMessages,
   }
 }

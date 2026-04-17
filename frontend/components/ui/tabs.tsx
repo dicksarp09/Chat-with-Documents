@@ -82,7 +82,7 @@ const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>(
         role="tab"
         aria-selected={isActive}
         data-state={isActive ? 'active' : 'inactive'}
-        onClick={() => onChange(triggerValue)}
+        onClick={() => triggerValue && onChange?.(triggerValue)}
         className={cn(
           'inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium',
           'transition-all duration-150',
