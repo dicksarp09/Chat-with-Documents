@@ -28,6 +28,9 @@ export interface ChartData {
   data: Record<string, any>[]
   xKey?: string
   yKey?: string
+  x?: string
+  y?: string
+  name?: string
 }
 
 export interface TableData {
