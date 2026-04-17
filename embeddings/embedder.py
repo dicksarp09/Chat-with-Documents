@@ -16,7 +16,11 @@ class Embedder:
         device: str = None,
         normalize_embeddings: bool = True,
     ):
-        self.model_name = model_name or settings.embedding_model
+        # Use smaller model for cloud environments
+        if model_name is None and settings.is_cloud:
+            self.model_name = settings.embedding_model_cloud
+        else:
+            self.model_name = model_name or settings.embedding_model
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
         self.normalize = normalize_embeddings
         self._model = None

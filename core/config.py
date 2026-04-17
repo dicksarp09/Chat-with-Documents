@@ -22,6 +22,11 @@ class Settings(BaseSettings):
         "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
 
+    # Auto-select smaller model for cloud/free tier
+    embedding_model_cloud: str = (
+        "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    )
+
     # Cloud detection
     is_cloud: bool = (
         os.getenv("RENDER", "").lower() == "true"
