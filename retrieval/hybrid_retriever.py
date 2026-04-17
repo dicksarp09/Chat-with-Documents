@@ -22,6 +22,7 @@ class HybridRetriever:
             if min_score_threshold is not None
             else settings.min_retrieval_score
         )
+        self.enable_diversity = getattr(settings, "enable_diversity_filter", False)
 
         self.vector_store = get_vector_store()
         self.embedder = get_embedder()
@@ -41,7 +42,9 @@ class HybridRetriever:
 
         if self.corpus_texts:
             tokenized_corpus = [text.lower().split() for text in self.corpus_texts]
-            self.bm25 = BM25Okapi(tokenized_corpus)
+            # BM25 with optimized parameters for precision
+            # k1=1.5 (term frequency saturation), b=0.75 (document length normalization)
+            self.bm25 = BM25Okapi(tokenized_corpus, k1=1.5, b=0.75)
             logger.info(f"Built BM25 index with {len(self.corpus_texts)} documents")
         else:
             self.bm25 = None
@@ -167,7 +170,11 @@ class HybridRetriever:
         if not filtered:
             merged_results.sort(key=lambda x: x["score"], reverse=True)
 
-        diverse_results = self._ensure_diversity(merged_results, k)
+        diverse_results = (
+            self._ensure_diversity(merged_results, k)
+            if self.enable_diversity
+            else merged_results[:k]
+        )
 
         logger.info(
             f"Hybrid retrieval merged to {len(diverse_results)} diverse results"

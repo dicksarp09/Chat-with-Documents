@@ -760,15 +760,15 @@ All settings in `core/config.py`:
 | Information Density | 82% | Good balance of detail vs brevity |
 | **Overall** | **95%** | **Grade: A - EXCELLENT (Production-grade)** |
 
-### RAGAS (Retrieval Quality)
+### RAGAS (Retrieval Quality - Optimized)
 
 | Metric | Score | Description |
 |--------|-------|-------------|
-| Context Precision | 0.388 | Top retrieved chunks are relevant |
+| Context Precision | 0.330 | Top retrieved chunks are relevant |
 | Context Recall | 1.000 | All relevant content retrieved |
-| Faithfulness | 0.700 | Answer grounded in context |
-| Answer Relevance | 0.600 | Answer addresses query |
-| **OVERALL** | **0.682** | **Satisfactory** |
+| Faithfulness | 0.900 | Answer grounded in context (improved) |
+| Answer Relevance | 0.780 | Answer addresses query (improved) |
+| **OVERALL** | **0.741** | **Grade: C - Satisfactory** |
 
 ### Latency Performance (ms)
 
@@ -795,12 +795,15 @@ All settings in `core/config.py`:
 3. **Query-aware compression** reduces context by 60% while preserving relevance
 4. **Rate limits** can impact LLM-based evaluation - infrastructure for measurement is in place
 
-### Optimizations Configured
+### Optimizations Applied (Precision-focused)
 ```python
-hybrid_alpha: 0.6          # More semantic weight
-retrieval_top_k: 15        # Retrieve more, let reranker decide
-min_retrieval_score: 0.05  # Low threshold to avoid filtering good results
-rerank_top_k: 5            # Final top-k for context
+hybrid_alpha: 0.65         # Balanced semantic + keyword
+retrieval_top_k: 20        # More candidates for reranker
+rerank_top_k: 15           # Reranker evaluates more options
+min_retrieval_score: 0.10  # Filter weak results
+min_rerank_score: -10.0    # Disabled - let reranker decide
+enable_diversity_filter: False  # Disabled for precision
+# BM25: k1=1.5, b=0.75 (tuned for precision)
 ```
 
 ---
