@@ -33,6 +33,18 @@ export interface ChartData {
   name?: string
 }
 
+export interface StreamingMessage {
+  type: 'chunk' | 'complete' | 'error'
+  content?: string
+  error?: string
+}
+
+export interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+  isStreaming?: boolean
+}
+
 export interface TableData {
   headers: string[]
   rows: string[][]
@@ -95,4 +107,50 @@ export function getWebSocketUrl(datasetId: string): string {
 
 export function useApiUrl() {
   return API_URL
+}
+
+export function createQueryWebSocket(
+  datasetId: string,
+  onMessage: (data: StreamingMessage) => void
+): WebSocket {
+  const url = `${WS_URL}/ws/query/${datasetId}`
+  const ws = new WebSocket(url)
+
+  ws.onopen = () => {
+    console.log('WebSocket connected')
+  }
+
+  ws.onmessage = (event) => {
+    try {
+      const data = JSON.parse(event.data) as StreamingMessage
+      onMessage(data)
+    } catch (e) {
+      console.error('Failed to parse WebSocket message:', e)
+    }
+  }
+
+  ws.onerror = (error) => {
+    console.error('WebSocket error:', error)
+    onMessage({ type: 'error', error: 'Connection error' })
+  }
+
+  ws.onclose = () => {
+    console.log('WebSocket disconnected')
+  }
+
+  return ws
+}
+
+export async function sendQueryViaWebSocket(
+  ws: WebSocket,
+  query: string
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ query }))
+      resolve()
+    } else {
+      reject(new Error('WebSocket not connected'))
+    }
+  })
 }
