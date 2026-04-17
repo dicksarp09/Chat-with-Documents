@@ -22,6 +22,20 @@ interface Dataset {
   chunk_count?: number
 }
 
+export interface ChartData {
+  type: 'bar' | 'line' | 'pie' | 'scatter'
+  title: string
+  data: Record<string, any>[]
+  xKey?: string
+  yKey?: string
+}
+
+export interface TableData {
+  headers: string[]
+  rows: string[][]
+  title?: string
+}
+
 export async function uploadFile(file: File): Promise<UploadResponse> {
   const formData = new FormData()
   formData.append('file', file)
