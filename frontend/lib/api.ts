@@ -12,6 +12,16 @@ interface QueryResponse {
   answer: string
   sources: string[]
   dataset_id: string
+  response?: {
+    chat?: {
+      answer?: string
+    }
+    answer?: string
+    tables?: any[]
+    plots?: any[]
+    insights?: Array<{ text: string }>
+    sources?: string[]
+  }
 }
 
 interface Dataset {
