@@ -9,8 +9,6 @@ const nextConfig = {
   },
   // Ensure proper asset handling
   trailingSlash: false,
-  // Vercel analytics (optional)
-  analytics: false,
 }
 
 module.exports = nextConfig
