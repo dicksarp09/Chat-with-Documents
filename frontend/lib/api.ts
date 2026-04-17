@@ -58,7 +58,7 @@ export interface ChatMessage {
 export interface TableData {
   columns?: string[]
   headers?: string[]
-  rows?: string[][]
+  rows?: (string | number)[][]
   title?: string
 }
 
