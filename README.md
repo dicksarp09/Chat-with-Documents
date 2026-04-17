@@ -918,3 +918,34 @@ document-intelligence-folder/
 ├── requirements.txt
 └── README.md
 ```
+
+---
+
+## Deployment
+
+### Option 1: Vercel (Frontend) + Render (Backend)
+
+**Frontend (Vercel):**
+1. Connect GitHub repo to Vercel
+2. Select `frontend` directory as root
+3. Add environment variables:
+   - `NEXT_PUBLIC_API_URL` = `https://chat-with-documents-1chi.onrender.com/api/v1`
+   - `NEXT_PUBLIC_WS_URL` = `wss://chat-with-documents-1chi.onrender.com`
+4. Deploy
+
+**Backend (Render):**
+- Already configured in `render.yaml`
+- Add `GROQ_API_KEY` in Render dashboard
+
+### Option 2: Render (Full Stack)
+
+Both frontend and backend configured in `render.yaml`:
+- API: `chat-docs-api` (Python/FastAPI)
+- Web: `chat-docs-web` (Node.js/Next.js)
+
+### Option 3: Docker
+
+```bash
+# Full stack
+docker-compose -f docker-compose.full.yml up -d
+```
