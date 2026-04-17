@@ -58,6 +58,7 @@ build/
 # Next.js
 frontend/.next/
 frontend/out/
+!frontend/lib/  # Exception: keep frontend/lib in git
 
 # Temporary files
 *.tmp
