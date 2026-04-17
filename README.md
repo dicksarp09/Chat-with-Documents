@@ -760,15 +760,26 @@ All settings in `core/config.py`:
 | Information Density | 82% | Good balance of detail vs brevity |
 | **Overall** | **95%** | **Grade: A - EXCELLENT (Production-grade)** |
 
-### RAGAS (Retrieval Quality - Optimized)
+### RAGAS (Retrieval Quality - Final Optimized)
 
 | Metric | Score | Description |
 |--------|-------|-------------|
-| Context Precision | 0.330 | Top retrieved chunks are relevant |
+| Context Precision | 0.363 | Top retrieved chunks are relevant |
 | Context Recall | 1.000 | All relevant content retrieved |
-| Faithfulness | 0.900 | Answer grounded in context (improved) |
-| Answer Relevance | 0.780 | Answer addresses query (improved) |
-| **OVERALL** | **0.741** | **Grade: C - Satisfactory** |
+| Faithfulness | 0.860 | Answer grounded in context |
+| Answer Relevance | 0.720 | Answer addresses query |
+| **OVERALL** | **0.732** | **Grade: C - Satisfactory** |
+
+### Final Configuration
+```python
+hybrid_alpha: 0.65         # Balanced semantic + keyword
+retrieval_top_k: 20       # More candidates for reranker
+rerank_top_k: 8           # Reduced from 15
+min_retrieval_score: 0.10  # Filter weak retrieval results
+min_rerank_score: 0.1     # Re-enabled filtering (cross-encoder threshold)
+enable_diversity_filter: True  # Re-enabled for redundancy reduction
+# BM25: k1=1.5, b=0.75 (tuned for precision)
+```
 
 ### Latency Performance (ms)
 
@@ -795,14 +806,14 @@ All settings in `core/config.py`:
 3. **Query-aware compression** reduces context by 60% while preserving relevance
 4. **Rate limits** can impact LLM-based evaluation - infrastructure for measurement is in place
 
-### Optimizations Applied (Precision-focused)
+### Optimizations Applied (Final)
 ```python
 hybrid_alpha: 0.65         # Balanced semantic + keyword
-retrieval_top_k: 20        # More candidates for reranker
-rerank_top_k: 15           # Reranker evaluates more options
-min_retrieval_score: 0.10  # Filter weak results
-min_rerank_score: -10.0    # Disabled - let reranker decide
-enable_diversity_filter: False  # Disabled for precision
+retrieval_top_k: 20       # More candidates for reranker
+rerank_top_k: 8           # Optimal size for reranker
+min_retrieval_score: 0.10 # Filter weak retrieval results
+min_rerank_score: 0.1     # Cross-encoder threshold for quality
+enable_diversity_filter: True  # Reduce redundancy
 # BM25: k1=1.5, b=0.75 (tuned for precision)
 ```
 

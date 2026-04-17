@@ -34,15 +34,15 @@ class Settings(BaseSettings):
     max_chunk_size: int = 400
 
     retrieval_top_k: int = 20
-    rerank_top_k: int = 15
+    rerank_top_k: int = 8
     hybrid_alpha: float = 0.65
 
-    # Precision tuning (balanced for better precision while maintaining recall)
+    # Precision tuning
     min_retrieval_score: float = 0.10
-    min_rerank_score: float = -10.0  # Disabled - let reranker decide
+    min_rerank_score: float = 0.1  # Lower threshold - allow more through
 
-    # Diversity settings (set to False for precision over recall)
-    enable_diversity_filter: bool = False
+    # Diversity settings
+    enable_diversity_filter: bool = True
     fallback_answer: str = (
         "I couldn't find relevant information to answer your question."
     )
