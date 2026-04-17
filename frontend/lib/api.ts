@@ -33,8 +33,8 @@ interface Dataset {
 }
 
 export interface ChartData {
-  type: 'bar' | 'line' | 'pie' | 'scatter'
-  title: string
+  type: string
+  title?: string
   data: Record<string, any>[]
   xKey?: string
   yKey?: string
@@ -58,7 +58,7 @@ export interface ChatMessage {
 export interface TableData {
   columns?: string[]
   headers?: string[]
-  rows: string[][]
+  rows?: string[][]
   title?: string
 }
 
