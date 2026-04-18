@@ -5,9 +5,7 @@
 [![Groq](https://img.shields.io/badge/Groq-FF6B00?style=flat)](https://groq.com/)
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)](https://python.org/)
 
-A production-grade RAG system...
 
-# Document Intelligence Engine
 
 A production-grade RAG (Retrieval-Augmented Generation) system for analyzing documents and CSV files using natural language. Built with FastAPI, Next.js, and Groq LLaMA.
 
@@ -45,6 +43,8 @@ A production-grade RAG system that addresses each challenge:
 ![Document Intelligence Demo](demo.gif)
 
 *Upload PDF → Ask question → Get answer with sources (600ms latency)*
+
+---
 
 ## Key Innovations
 
