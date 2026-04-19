@@ -42,7 +42,7 @@ class Embedder:
     def encode(
         self,
         texts: Union[str, List[str]],
-        batch_size: int = 100,  # Gemini max is 100 per request
+        batch_size: int = 10,  # Free tier: 100/min, use smaller batches
         show_progress: bool = False,
         convert_to_numpy: bool = True,
     ) -> np.ndarray:
@@ -86,6 +86,11 @@ class Embedder:
 
                 if show_progress:
                     logger.info(f"Encoded {end}/{len(texts)} texts")
+
+                # Rate limit: free tier is 100 req/min = 1.67/sec
+                # With batch_size=10, need delay between batches
+                if end < len(texts) and len(texts) > batch_size:
+                    time.sleep(0.6)  # ~100 requests per minute
 
             embeddings = np.array(all_embeddings, dtype=np.float32)
 
