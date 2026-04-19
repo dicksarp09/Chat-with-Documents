@@ -520,7 +520,7 @@ curl -X POST http://localhost:8000/api/v1/query \
 
 ### For AI/ML Engineers
 
-- **Embedding model selection**: all-MiniLM-L6-v2 chosen for speed/quality balance (384-dim, 120MB)
+- **Embedding model selection**: gemini-embedding-001 via API (768-dim, zero local memory)
 - **Reranker strategy**: Cross-encoder on top-20 (not top-100) for latency optimization
 - **Compression approach**: LLM-powered (not extractive) to preserve semantic meaning
 - **Evaluation framework**: Automated LLM-as-Judge with weighted metrics
@@ -536,7 +536,7 @@ curl -X POST http://localhost:8000/api/v1/query \
 
 - **Vector store**: In-memory FAISS (swappable to persistent)
 - **Concurrency**: Async FastAPI with proper connection pooling
-- **Resource management**: Lazy model loading, memory-efficient chunking
+- **Resource management**: API-based embeddings (no local model loading)
 - **Monitoring**: Structured logging ready for ELK/Datadog integration
 
 ---
@@ -728,8 +728,10 @@ All settings in `core/config.py`:
 | Setting | Default | Description |
 |---------|---------|-------------|
 | `groq_model` | llama-3.3-70b-versatile | LLM model |
-| `embedding_model` | all-MiniLM-L6-v2 | Embedding model |
+| `embedding_model` | gemini-embedding-001 | Embedding model (API) |
+| `embedding_dimension` | 768 | Embedding dimension |
 | `reranker_model` | ms-marco-MiniLM-L-6-v2 | Reranker model |
+| `use_reranker` | false | Enable/disable reranker (~200MB) |
 | `chunk_size` | 512 | Base chunk size |
 | `max_chunk_size` | 400 | Max content chunk |
 | `retrieval_top_k` | 20 | Initial retrieval |
@@ -855,7 +857,7 @@ python evaluation/ragas_evaluation.py
 | FastAPI | Web framework |
 | PyMuPDF | PDF parsing |
 | python-docx | DOCX parsing |
-| sentence-transformers | Embeddings |
+| google-genai | Gemini embeddings (API) |
 | faiss-cpu | Vector store |
 | rank-bm25 | Sparse retrieval |
 | groq | LLM client |
@@ -878,6 +880,16 @@ python evaluation/ragas_evaluation.py
 
 ### Environment Variables
 ```bash
+# Gemini API (for embeddings - replaces local sentence-transformers)
+GEMINI_API_KEY=your_gemini_key_here
+
+# Groq API (for LLM)
+GROQ_API_KEY=your_groq_key_here
+
+# Optional: Enable cross-encoder reranker (~200MB additional)
+USE_RERANKER=true
+
+# Redis (optional caching)
 REDIS_HOST=localhost
 REDIS_PORT=6379
 ```
