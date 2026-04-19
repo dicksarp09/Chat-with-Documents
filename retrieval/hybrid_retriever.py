@@ -24,8 +24,9 @@ class HybridRetriever:
         )
         self.enable_diversity = getattr(settings, "enable_diversity_filter", False)
 
-        self.vector_store = get_vector_store()
-        self.embedder = get_embedder()
+        # Lazy initialization - don't load models at startup for lite mode
+        self._vector_store = None
+        self._embedder = None
         self.bm25: Optional[BM25Okapi] = None
         self.corpus_ids: List[str] = []
         self.corpus_texts: List[str] = []
@@ -33,6 +34,24 @@ class HybridRetriever:
         logger.info(
             f"Initialized HybridRetriever with alpha={self.alpha}, top_k={self.top_k}, min_score={self.min_score_threshold}"
         )
+
+    @property
+    def vector_store(self):
+        if self._vector_store is None:
+            from storage.vector_store import get_vector_store
+
+            self._vector_store = get_vector_store()
+        return self._vector_store
+
+    @property
+    def embedder(self):
+        if settings.use_lite_mode:
+            return None
+        if self._embedder is None:
+            from embeddings.embedder import get_embedder
+
+            self._embedder = get_embedder()
+        return self._embedder
 
     def _build_bm25_index(self, doc_id: Optional[str] = None) -> None:
         all_nodes = self.vector_store.get_all_nodes(doc_id=None)

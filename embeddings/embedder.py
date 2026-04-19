@@ -1,7 +1,7 @@
 import logging
+import time
 from typing import List, Optional, Union
 import numpy as np
-import torch
 
 from core.config import settings
 
@@ -13,40 +13,36 @@ class Embedder:
     def __init__(
         self,
         model_name: str = None,
-        device: str = None,
-        normalize_embeddings: bool = True,
+        output_dimensionality: int = None,
     ):
-        # Use smaller model for cloud environments
-        if model_name is None and settings.is_cloud:
-            self.model_name = settings.embedding_model_cloud
-        else:
-            self.model_name = model_name or settings.embedding_model
-        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
-        self.normalize = normalize_embeddings
-        self._model = None
-        self._embedding_dim = None
+        self.model_name = model_name or settings.embedding_model
+        self.api_key = settings.gemini_api_key
+        self._client = None
+        self._output_dimensionality = output_dimensionality or settings.embedding_dimension
+        self._embedding_dim = self._output_dimensionality
 
     @property
-    def model(self):
-        if self._model is None:
-            logger.info(f"Loading embedding model: {self.model_name} on {self.device}")
-            from sentence_transformers import SentenceTransformer
-
-            self._model = SentenceTransformer(self.model_name, device=self.device)
-            self._embedding_dim = self._model.get_sentence_embedding_dimension()
-            logger.info(f"Embedding dimension: {self._embedding_dim}")
-        return self._model
+    def client(self):
+        if self._client is None:
+            if not self.api_key:
+                logger.warning("GEMINI_API_KEY not set. Embeddings will use fallback mode.")
+                return None
+            try:
+                from google import genai
+                self._client = genai.Client(api_key=self.api_key)
+            except Exception as e:
+                logger.warning(f"Failed to initialize Gemini client: {e}")
+                self._client = None
+        return self._client
 
     @property
     def embedding_dim(self):
-        if self._embedding_dim is None:
-            _ = self.model
         return self._embedding_dim
 
     def encode(
         self,
         texts: Union[str, List[str]],
-        batch_size: int = 32,
+        batch_size: int = 100,  # Gemini max is 100 per request
         show_progress: bool = False,
         convert_to_numpy: bool = True,
     ) -> np.ndarray:
@@ -55,16 +51,49 @@ class Embedder:
 
         texts = [t if t else " " for t in texts]
 
-        embeddings = self.model.encode(
-            texts,
-            batch_size=batch_size,
-            show_progress_bar=show_progress,
-            normalize_embeddings=self.normalize,
-            convert_to_numpy=convert_to_numpy,
-            device=self.device,
-        )
+        if self.client is None:
+            logger.warning("Gemini client unavailable, returning zero embeddings (fallback mode)")
+            return np.zeros((len(texts), self._embedding_dim), dtype=np.float32)
 
-        return embeddings
+        try:
+            config = None
+            if self._output_dimensionality:
+                config = {"outputDimensionality": self._output_dimensionality}
+
+            all_embeddings = []
+            for start in range(0, len(texts), batch_size):
+                end = min(start + batch_size, len(texts))
+                batch = texts[start:end]
+
+                for attempt in range(3):
+                    try:
+                        response = self.client.models.embed_content(
+                            model=self.model_name,
+                            contents=batch,
+                            config=config
+                        )
+                        break
+                    except Exception as rate_err:
+                        if "RESOURCE_EXHAUSTED" in str(rate_err) and attempt < 2:
+                            wait_time = 35 if attempt == 0 else 60
+                            logger.warning(f"Rate limit hit, retrying in {wait_time}s...")
+                            time.sleep(wait_time)
+                            continue
+                        raise
+
+                batch_embeddings = [list(e.values) for e in response.embeddings]
+                all_embeddings.extend(batch_embeddings)
+
+                if show_progress:
+                    logger.info(f"Encoded {end}/{len(texts)} texts")
+
+            embeddings = np.array(all_embeddings, dtype=np.float32)
+
+            return embeddings
+
+        except Exception as e:
+            logger.error(f"Gemini embedding failed: {e}")
+            return np.zeros((len(texts), self._embedding_dim), dtype=np.float32)
 
     def encode_query(self, query: str) -> np.ndarray:
         return self.encode([query])[0]
@@ -73,24 +102,12 @@ class Embedder:
         return self.embedding_dim
 
     def similarity(self, embedding1: np.ndarray, embedding2: np.ndarray) -> float:
-        if self.normalize:
-            return float(np.dot(embedding1, embedding2))
-        else:
-            return float(
-                np.dot(embedding1, embedding2)
-                / (np.linalg.norm(embedding1) * np.linalg.norm(embedding2))
-            )
+        return float(np.dot(embedding1, embedding2))
 
     def similarity_batch(
         self, query_embedding: np.ndarray, document_embeddings: np.ndarray
     ) -> np.ndarray:
-        if self.normalize:
-            return np.dot(document_embeddings, query_embedding)
-        else:
-            return np.dot(document_embeddings, query_embedding) / (
-                np.linalg.norm(document_embeddings, axis=1)
-                * np.linalg.norm(query_embedding)
-            )
+        return np.dot(document_embeddings, query_embedding)
 
 
 _embedder_instance: Optional[Embedder] = None

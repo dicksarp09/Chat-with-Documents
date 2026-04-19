@@ -248,14 +248,9 @@ _vector_store_dimension: Optional[int] = None
 def get_vector_store() -> VectorStore:
     global _vector_store_instance, _vector_store_dimension
     if _vector_store_instance is None:
-        # Lazy dimension detection - only load embedder when needed
+        # Use dimension from config (gemini-embedding-001 = 768)
         from core.config import settings
-
-        if settings.is_cloud:
-            # For cloud, use smaller model dimension
-            _vector_store_dimension = 384  # MiniLM-L6-v2 dimension
-        else:
-            embedder = get_embedder()
-            _vector_store_dimension = embedder.get_embedding_dim()
+        _vector_store_dimension = settings.embedding_dimension
         _vector_store_instance = VectorStore(dimension=_vector_store_dimension)
+        logger.info(f"VectorStore initialized with dimension: {_vector_store_dimension}")
     return _vector_store_instance

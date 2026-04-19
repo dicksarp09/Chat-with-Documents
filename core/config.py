@@ -14,7 +14,9 @@ class Settings(BaseSettings):
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
     groq_model: str = "llama-3.3-70b-versatile"
 
-    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
+    embedding_model: str = "gemini-embedding-001"
+    embedding_dimension: int = 768  # Reduced from default 3072 for memory efficiency
     reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
     # Use smaller models for memory-constrained environments
@@ -26,6 +28,12 @@ class Settings(BaseSettings):
     embedding_model_cloud: str = (
         "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     )
+
+    # Lite mode: disable embeddings (BM25 only) for free tier
+    use_lite_mode: bool = os.getenv("LITE_MODE", "").lower() == "true"
+
+    # Disable cross-encoder reranker to save memory (~200MB)
+    use_reranker: bool = os.getenv("USE_RERANKER", "false").lower() == "true"
 
     # Cloud detection
     is_cloud: bool = (
@@ -39,12 +47,12 @@ class Settings(BaseSettings):
     max_chunk_size: int = 400
 
     retrieval_top_k: int = 20
-    rerank_top_k: int = 8
-    hybrid_alpha: float = 0.65
+    rerank_top_k: int = 5
+    hybrid_alpha: float = 0.5  # Balanced - will use both dense and sparse
 
     # Precision tuning
-    min_retrieval_score: float = 0.10
-    min_rerank_score: float = 0.1  # Lower threshold - allow more through
+    min_retrieval_score: float = 0.05  # Lower for dense (scores around 0.1-0.2)
+    min_rerank_score: float = 0.3  # Higher threshold for quality
 
     # Diversity settings
     enable_diversity_filter: bool = True

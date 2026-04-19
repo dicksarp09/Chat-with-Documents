@@ -26,6 +26,14 @@ async def query_dataset(
 ):
     logger.info(f"Query request: '{query[:50]}...' on {dataset_id}")
 
+    # If there's a JSON body, allow overriding params
+    # But for now, just use query params
+
+    return await _process_query(dataset_id, query)
+
+
+async def _process_query(dataset_id: str, query: str):
+
     try:
         if dataset_id.startswith("ds_"):
             engine = get_csv_engine()

@@ -29,6 +29,7 @@ from retrieval.reranker import get_reranker
 from compression.compressor import get_compressor
 from llm.reasoning import get_reasoning_pipeline
 from validation.json_validator import get_validator, ValidationResult
+from core.config import settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -154,8 +155,12 @@ async def query_documents(request: QueryRequest):
                 sources=[],
             )
 
-        reranked = reranker.rerank(request.query, retrieved, top_k=5)
-        logger.info(f"Reranked to top {len(reranked)} results")
+        if settings.use_reranker:
+            reranked = reranker.rerank(request.query, retrieved, top_k=5)
+            logger.info(f"Reranked to top {len(reranked)} results")
+        else:
+            reranked = retrieved[:5]
+            logger.info(f"Skipped reranker (disabled), using top {len(reranked)} results")
 
         compressed = compressor.compress(request.query, reranked)
         logger.info(f"Compressed context: {compressed.compression_ratio:.2%}")
