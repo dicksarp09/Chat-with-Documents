@@ -24,6 +24,7 @@ class DocumentEngineWrapper:
         """Load previously processed documents from SQLite."""
         try:
             from storage.sqlite_store import get_sqlite_store
+            from chunking.hierarchical_chunker import ChunkNode
 
             self._sqlite_store = get_sqlite_store()
 
@@ -31,10 +32,23 @@ class DocumentEngineWrapper:
             datasets = self._sqlite_store.get_all_datasets()
             if datasets:
                 logger.info(f"Found {len(datasets)} previously processed datasets")
+
+                # Import here to avoid circular imports
+                from storage.vector_store import get_vector_store
+                vector_store = get_vector_store()
+
                 for ds in datasets:
                     chunks = self._sqlite_store.load_dataset(ds["id"])
                     if chunks:
-                        logger.info(f"  {ds['name']}: {len(chunks)} chunks ready")
+                        # Convert dict back to ChunkNode objects
+                        nodes = []
+                        for chunk_data in chunks:
+                            node = ChunkNode(**chunk_data)
+                            nodes.append(node)
+
+                        # Add to vector store
+                        vector_store.add_nodes(nodes)
+                        logger.info(f"  {ds['name']}: {len(chunks)} chunks loaded into vector store")
         except Exception as e:
             logger.warning(f"Could not load from SQLite: {e}")
             self._sqlite_store = None
