@@ -24,16 +24,23 @@ class HybridRetriever:
         )
         self.enable_diversity = getattr(settings, "enable_diversity_filter", False)
 
-        # Lazy initialization - don't load models at startup for lite mode
         self._vector_store = None
         self._embedder = None
         self.bm25: Optional[BM25Okapi] = None
         self.corpus_ids: List[str] = []
         self.corpus_texts: List[str] = []
+        self._query_classifier = None
 
         logger.info(
             f"Initialized HybridRetriever with alpha={self.alpha}, top_k={self.top_k}, min_score={self.min_score_threshold}"
         )
+
+    @property
+    def query_classifier(self):
+        if self._query_classifier is None:
+            from retrieval.query_classifier import get_intent_classifier
+            self._query_classifier = get_intent_classifier()
+        return self._query_classifier
 
     @property
     def vector_store(self):
@@ -130,62 +137,69 @@ class HybridRetriever:
         return results
 
     def retrieve(
-        self, query: str, doc_id: Optional[str] = None, top_k: int = None
+        self, query: str, doc_id: Optional[str] = None, top_k: int = None, intent: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        k = top_k if top_k is not None else self.top_k
+        from retrieval.query_classifier import QueryIntent
+
+        if intent is None:
+            intent = self.query_classifier.classify(query)
+        elif isinstance(intent, str):
+            intent = QueryIntent(intent)
+
+        config = self.query_classifier.get_retrieval_config(intent)
+        k = top_k if top_k is not None else config.get("top_k", self.top_k)
 
         logger.info(
-            f"Starting hybrid retrieval for query: '{query[:50]}...' (doc_id: {doc_id})"
+            f"Starting hybrid retrieval for query: '{query[:50]}...' (doc_id: {doc_id}, intent: {intent.value})"
         )
 
-        sparse_results = self._sparse_retrieval(query, doc_id, k * 2)
-        logger.info(f"Sparse retrieval returned {len(sparse_results)} results")
+        expanded_queries = self.query_classifier.expand_query(query, intent)
 
-        dense_results = self._dense_retrieval(query, doc_id, k * 2)
-        logger.info(f"Dense retrieval returned {len(dense_results)} results")
+        all_results: Dict[str, Dict[str, Any]] = {}
 
-        score_map: Dict[str, Dict[str, Any]] = {}
+        for eq in expanded_queries:
+            sparse_results = self._sparse_retrieval(eq, doc_id, k)
+            for r in sparse_results:
+                node_id = r["node_id"]
+                if node_id in all_results:
+                    all_results[node_id]["sparse_score"] = max(all_results[node_id]["sparse_score"], r["score"])
+                else:
+                    all_results[node_id] = {
+                        "node_id": node_id,
+                        "node": r["node"],
+                        "sparse_score": r["score"],
+                        "dense_score": 0.0,
+                        "score": 0.0,
+                    }
 
-        for r in sparse_results:
-            node_id = r["node_id"]
-            score_map[node_id] = {
-                "node_id": node_id,
-                "node": r["node"],
-                "sparse_score": r["score"],
-                "dense_score": 0.0,
-                "score": 0.0,
-            }
+            dense_results = self._dense_retrieval(eq, doc_id, k)
+            for r in dense_results:
+                node_id = r["node_id"]
+                if node_id in all_results:
+                    all_results[node_id]["dense_score"] = max(all_results[node_id]["dense_score"], r["score"])
+                else:
+                    all_results[node_id] = {
+                        "node_id": node_id,
+                        "node": r["node"],
+                        "sparse_score": 0.0,
+                        "dense_score": r["score"],
+                        "score": 0.0,
+                    }
 
-        for r in dense_results:
-            node_id = r["node_id"]
-            if node_id in score_map:
-                score_map[node_id]["dense_score"] = r["score"]
-            else:
-                score_map[node_id] = {
-                    "node_id": node_id,
-                    "node": r["node"],
-                    "sparse_score": 0.0,
-                    "dense_score": r["score"],
-                    "score": 0.0,
-                }
+        alpha = config.get("use_dense_weight", self.alpha)
+        for node_id, data in all_results.items():
+            data["score"] = alpha * data["dense_score"] + (1 - alpha) * data["sparse_score"]
 
-        for node_id, data in score_map.items():
-            data["score"] = (
-                self.alpha * data["dense_score"]
-                + (1 - self.alpha) * data["sparse_score"]
-            )
-
-        # Filter by minimum score threshold (precision improvement)
         filtered = [
-            r for r in score_map.values() if r["score"] >= self.min_score_threshold
+            r for r in all_results.values() if r["score"] >= self.min_score_threshold
         ]
         filtered.sort(key=lambda x: x["score"], reverse=True)
 
         logger.info(
-            f"After score filtering ({self.min_score_threshold}): {len(filtered)}/{len(score_map)} results"
+            f"After score filtering ({self.min_score_threshold}): {len(filtered)}/{len(all_results)} results"
         )
 
-        merged_results = filtered if filtered else list(score_map.values())
+        merged_results = filtered if filtered else list(all_results.values())
         if not filtered:
             merged_results.sort(key=lambda x: x["score"], reverse=True)
 

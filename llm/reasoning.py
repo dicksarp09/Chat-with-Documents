@@ -261,11 +261,15 @@ class ReasoningPipeline:
         try:
             result = self.llm.generate_json(prompt, SYSTEM_PROMPT)
 
+            if not isinstance(result, dict):
+                logger.error(f"LLM returned non-dict: {type(result)}")
+                raise ValueError(f"Expected dict, got {type(result)}")
+
             evidence_nodes = result.get("evidence", [])
             if isinstance(evidence_nodes, list) and len(evidence_nodes) > 0:
                 sources = evidence_nodes
             else:
-                sources = context.source_nodes[:3]
+                sources = context.source_nodes[:3] if context.source_nodes else []
 
             answer = result.get("answer", "Unable to generate answer")
 
@@ -275,14 +279,17 @@ class ReasoningPipeline:
                 confidence = result.get("confidence", "explicitly_mentioned")
 
             key_points = []
-            for kp_data in result.get("key_points", []):
-                key_points.append(
-                    KeyPoint(
-                        text=kp_data.get("text", ""),
-                        category=kp_data.get("category", "general"),
-                        evidence=kp_data.get("evidence", sources[:2]),
-                    )
-                )
+            kp_data_list = result.get("key_points", [])
+            if isinstance(kp_data_list, list):
+                for kp_data in kp_data_list:
+                    if isinstance(kp_data, dict):
+                        key_points.append(
+                            KeyPoint(
+                                text=kp_data.get("text", ""),
+                                category=kp_data.get("category", "general"),
+                                evidence=kp_data.get("evidence", sources[:2]),
+                            )
+                        )
 
             return QueryOutput(
                 answer=answer,
@@ -299,7 +306,7 @@ class ReasoningPipeline:
             return QueryOutput(
                 answer="Error during query analysis",
                 summary="",
-                sources=context.source_nodes[:3],
+                sources=context.source_nodes[:3] if context.source_nodes else [],
             )
 
 

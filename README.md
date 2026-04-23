@@ -765,28 +765,41 @@ All settings in `core/config.py`:
 
 ## Performance Results
 
-### LLM-as-Judge (Answer Quality - Research Paper)
+### Final Benchmark (MiniLM-L12-v2 Embeddings)
 
-| Metric | Score | Description |
-|--------|-------|-------------|
-| Faithfulness | 100% | Answer uses retrieved context correctly |
-| Relevance | 100% | Answer addresses the query |
-| Concision | 90% | Answer is appropriately concise |
-| Groundedness | 96% | Answer is based on provided evidence |
-| Information Density | 82% | Good balance of detail vs brevity |
-| **Overall** | **95%** | **Grade: A - EXCELLENT (Production-grade)** |
+**Test Configuration:**
+- Embedding: `sentence-transformers/all-MiniLM-L12-v2` (384-dim, open-source)
+- Document: Food security research paper (22705iied.pdf)
+- Chunks: 431 nodes, 180 leaf chunks
+- Test Queries: 5 questions covering extraction, reasoning, and recommendations
 
-### RAGAS (Retrieval Quality - Final Optimized)
+| Query | Latency | Answer |
+|-------|---------|--------|
+| Who is at risk? | 37,785ms | Vulnerable communities in fragile regions |
+| Main causes? | 3,290ms | Climate change, economic stress |
+| Recommendations? | 3,844ms | Anticipatory social protection |
+| Climate effects? | 3,781ms | 21% reduction in agricultural productivity |
+| Affected regions? | 13,040ms | Sub-Saharan Africa, South Asia, Central America |
 
-| Metric | Score | Description |
-|--------|-------|-------------|
-| Context Precision | 0.363 | Top retrieved chunks are relevant |
-| Context Recall | 1.000 | All relevant content retrieved |
-| Faithfulness | 0.860 | Answer grounded in context |
-| Answer Relevance | 0.720 | Answer addresses query |
-| **OVERALL** | **0.732** | **Grade: C - Satisfactory** |
+### Performance Summary
 
-### Final Configuration
+| Metric | mpnet-base-v2 (768-dim) | MiniLM-L12 (384-dim) | Improvement |
+|--------|------------------------|---------------------|-------------|
+| Embedding time (431 vectors) | ~120s | ~20s | **6x faster** |
+| Query latency (warm) | ~8,500ms | ~7,100ms | **17% faster** |
+| Memory footprint | Higher | ~90MB | **Lower** |
+| API costs | $0 (self-hosted) | $0 (self-hosted) | Same |
+
+### Query Intent Classification
+
+System automatically detects query type and optimizes retrieval:
+
+| Intent | Pattern | Strategy |
+|--------|---------|----------|
+| Extraction | "Who", "What", "Where" | Prioritize keyword matching |
+| Summarization | "Summarize", "main" | Prioritize semantic similarity |
+| Reasoning | "Why", "How does", "causes" | Include contextual understanding |
+| Recommendation | "Should", "Recommend" | Action-oriented retrieval |
 ```python
 hybrid_alpha: 0.65         # Balanced semantic + keyword
 retrieval_top_k: 20       # More candidates for reranker
@@ -857,7 +870,7 @@ python evaluation/ragas_evaluation.py
 | FastAPI | Web framework |
 | PyMuPDF | PDF parsing |
 | python-docx | DOCX parsing |
-| google-genai | Gemini embeddings (API) |
+| sentence-transformers | Open-source embeddings (all-MiniLM-L12-v2) |
 | faiss-cpu | Vector store |
 | rank-bm25 | Sparse retrieval |
 | groq | LLM client |
@@ -880,9 +893,6 @@ python evaluation/ragas_evaluation.py
 
 ### Environment Variables
 ```bash
-# Gemini API (for embeddings - replaces local sentence-transformers)
-GEMINI_API_KEY=your_gemini_key_here
-
 # Groq API (for LLM)
 GROQ_API_KEY=your_groq_key_here
 

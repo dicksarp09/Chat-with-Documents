@@ -3,13 +3,14 @@ from typing import List, Dict, Any, Optional
 
 SYSTEM_PROMPT = """You are an expert document analysis AI. Your role is to analyze documents and provide structured, accurate insights.
 
-Guidelines:
-1. Always cite evidence from the source nodes using node IDs
-2. Be precise and factual in your analysis
-3. Identify risks, obligations, and key points systematically
-4. Output valid JSON only
-5. Never fabricate information not present in the context
-"""
+CRITICAL RULES FOR FAITHFULNESS:
+1. NEVER fabricate information - only use facts from the provided context
+2. EVERY statement MUST be directly supported by evidence from the context
+3. If information is not explicitly in the context, you MUST say "Not found in context"
+4. Use node IDs to cite specific evidence for each claim
+5. When uncertain, qualify statements as "inferred from context" not "stated"
+
+Output format: Valid JSON only. No markdown, no explanations outside JSON structure."""
 
 
 SUMMARY_PROMPT = """Analyze the following document context and provide a comprehensive summary.
@@ -132,37 +133,42 @@ Output as JSON:
 """
 
 
-QUERY_ANSWER_PROMPT = """Answer the query with EVIDENCE-BACKED detail based on the provided context.
+QUERY_ANSWER_PROMPT = """Answer the query using ONLY information from the provided context.
 
 Query: {query}
 
 Context:
 {context}
 
-CRITICAL RULES:
-1. Detect question type: "broad" (summary), "specific" (detailed), "factual" (short answer)
-2. EVERY statement MUST include evidence from context
-3. Include at least 1-2 specific details (technologies, metrics, outcomes)
-5. If factual question → answer concisely with evidence
-6. If specific question → detailed with specific technologies/metrics and evidence
-7. If broad question → 3-5 sentence summary with key highlights and evidence
-8. If information NOT in context → return exactly: "Not found in context"
-9. NEVER fabricate - only include info with supporting evidence
+STRICT RULES - VIOLATION = WRONG ANSWER:
+1. Every factual claim MUST cite a node_id from the context
+2. Use format: [evidence: node_id_1, node_id_2] after each claim
+3. Do NOT add information not present in context
+4. Do NOT generalize or paraphrase beyond what context states
+5. If query asks about something not in context → respond: "Not found in context"
+6. If partial information exists → answer with what exists, note what's missing
 
-OUTPUT FORMAT (ALL fields required):
+Question type detection:
+- "Who/What/Where/When" → Extraction (specific facts needed)
+- "Why/How does" → Reasoning (causal explanation needed)
+- "What should/How to" → Recommendation (action steps needed)
+- "Summarize/What are" → Summary (overview needed)
+
+Output JSON (ALL fields required):
 {{
-    "answer": "YOUR ANSWER with specific details from context (must include technologies, metrics, or outcomes)",
-    "evidence": ["node_id_1", "node_id_2"],
-    "confidence": "explicitly_mentioned|partial|inferred|not_found"
+    "answer": "YOUR ANSWER - each factual claim followed by [evidence: node_id]. NEVER include info without evidence.",
+    "evidence": ["list of node_ids used", "at least one required"],
+    "confidence": "explicitly_mentioned|partial|inferred|not_found",
+    "key_points": ["specific details extracted from context"]
 }}
 
-BAD examples (too vague):
-- "He worked on a project"
-- "He has experience"
+Evidence examples (GOOD):
+- "Vulnerable communities in sub-Saharan Africa are at risk [evidence: node_42, node_55]"
+- "Climate change disrupts crop yields [evidence: node_12]"
 
-GOOD examples (with evidence):
-- "He worked on VoiceBreeze AI project, building low-latency conversational agents using Gemini Live API" [evidence: node_12, node_15]
-- "He improved system latency by 73%" [evidence: node_8]
+Non-evidence examples (BAD):
+- "People in poor regions suffer" (no node citation)
+- "The document suggests solutions" (too vague, no node)
 """
 
 
@@ -218,21 +224,25 @@ Output as JSON:
 """
 
 
-COMPRESSION_PROMPT = """Given the following context and query, extract only the most relevant information.
+COMPRESSION_PROMPT = """Given the following context and query, extract ONLY the most relevant information.
 
 Query: {query}
 
 Context:
 {context}
 
-Instructions:
-1. Extract sentences directly relevant to answering the query
-2. Preserve factual information and key details
-3. Remove redundant or tangential information
-4. Keep the output concise but complete
+CRITICAL: Preserve the EXACT text from context - do not paraphrase or summarize.
+This is used for answer generation, so accuracy is essential.
 
-Output the compressed context only, no explanations.
-"""
+Instructions:
+1. Extract sentences DIRECTLY relevant to answering the query
+2. Keep the exact wording - copy from context verbatim
+3. Include node_id markers at the end of each extracted sentence: [node: node_id]
+4. Preserve factual information and key details exactly as stated
+5. Remove only redundant or clearly irrelevant content
+6. Maintain logical flow where possible
+
+Output format: Compressed context with [node: id] markers. No JSON."""
 
 
 def get_summary_prompt(context: str) -> str:

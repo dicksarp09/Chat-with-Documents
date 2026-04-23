@@ -14,9 +14,8 @@ class Settings(BaseSettings):
     groq_api_key: str = os.getenv("GROQ_API_KEY", "")
     groq_model: str = "llama-3.3-70b-versatile"
 
-    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
-    embedding_model: str = "gemini-embedding-001"
-    embedding_dimension: int = 768  # Reduced from default 3072 for memory efficiency
+    embedding_model: str = "sentence-transformers/all-MiniLM-L12-v2"
+    embedding_dimension: int = 384  # MiniLM outputs 384 dimensions
     reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
     # Use smaller models for memory-constrained environments

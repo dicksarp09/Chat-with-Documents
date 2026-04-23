@@ -36,10 +36,18 @@ class VectorStore:
         if not nodes:
             return
 
+        # Filter out nodes that already exist
+        new_nodes = [n for n in nodes if n.id not in self.id_to_idx]
+        if not new_nodes:
+            logger.info(f"Vector store: all {len(nodes)} nodes already exist, skipping")
+            return
+
+        logger.info(f"Vector store: adding {len(new_nodes)} new nodes ({len(nodes)} total, {len(new_nodes)} new)")
+
         embedder = get_embedder()
 
-        texts = [node.text for node in nodes]
-        embeddings = embedder.encode(texts, show_progress=True)
+        texts = [node.text for node in new_nodes]
+        embeddings = embedder.encode(texts, show_progress=True, batch_size=64)
 
         if embeddings.ndim == 1:
             embeddings = embeddings.reshape(1, -1)
@@ -50,7 +58,7 @@ class VectorStore:
             logger.warning("Found NaN or Inf in embeddings, replacing with zeros")
             embeddings = np.nan_to_num(embeddings)
 
-        for i, node in enumerate(nodes):
+        for i, node in enumerate(new_nodes):
             if node.id in self.id_to_idx:
                 continue
 
@@ -66,7 +74,7 @@ class VectorStore:
                 "idx": idx,
             }
 
-        logger.info(f"Added {len(nodes)} nodes to vector store")
+        logger.info(f"Added {len(new_nodes)} nodes to vector store")
 
     def query_dense(
         self, query: str, top_k: int = 10, doc_id: Optional[str] = None

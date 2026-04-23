@@ -1,5 +1,4 @@
 import logging
-import uuid
 import tempfile
 import os
 from pathlib import Path
@@ -28,27 +27,26 @@ class DocumentEngineWrapper:
 
             self._sqlite_store = get_sqlite_store()
 
-            # Load all datasets at startup
             datasets = self._sqlite_store.get_all_datasets()
             if datasets:
                 logger.info(f"Found {len(datasets)} previously processed datasets")
 
-                # Import here to avoid circular imports
                 from storage.vector_store import get_vector_store
                 vector_store = get_vector_store()
 
-                for ds in datasets:
-                    chunks = self._sqlite_store.load_dataset(ds["id"])
-                    if chunks:
-                        # Convert dict back to ChunkNode objects
-                        nodes = []
-                        for chunk_data in chunks:
-                            node = ChunkNode(**chunk_data)
-                            nodes.append(node)
+                # Only load the most recent dataset
+                latest_ds = max(datasets, key=lambda d: d.get("created_at", ""))
+                logger.info(f"Loading most recent: {latest_ds['name']}")
 
-                        # Add to vector store
-                        vector_store.add_nodes(nodes)
-                        logger.info(f"  {ds['name']}: {len(chunks)} chunks loaded into vector store")
+                chunks = self._sqlite_store.load_dataset(latest_ds["id"])
+                if chunks:
+                    nodes = []
+                    for chunk_data in chunks:
+                        node = ChunkNode(**chunk_data)
+                        nodes.append(node)
+
+                    vector_store.add_nodes(nodes)
+                    logger.info(f"  {latest_ds['name']}: {len(chunks)} chunks loaded")
         except Exception as e:
             logger.warning(f"Could not load from SQLite: {e}")
             self._sqlite_store = None
@@ -84,8 +82,6 @@ class DocumentEngineWrapper:
     def process(self, file_bytes: bytes, filename: str, **kwargs) -> Dict[str, Any]:
         self._ensure_init()
 
-        doc_id = f"doc_{uuid.uuid4().hex[:12]}"
-
         with tempfile.NamedTemporaryFile(
             mode="wb", suffix=Path(filename).suffix, delete=False
         ) as tmp:
@@ -100,6 +96,7 @@ class DocumentEngineWrapper:
             else:
                 raise ValueError(f"Unsupported document type: {filename}")
 
+            doc_id = parsed_doc.doc_id
             structure = self._chunk_document(parsed_doc)
 
             vector_store = self._get_vector_store()
