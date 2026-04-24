@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-04-24T08:07:37.392916",
+  "document": "22705iied.pdf (Research Paper)",
+  "total_time_ms": 51034.15131568909,
+  "results": [
+    {
+      "question": "What is this research paper about?",
+      "answer": "This research paper is about the climate\u2013food nexus, constructing a new Food Security Index (FSI) for 162 countries across four pillars, and using it to show where countries stand today on each pillar and overall, assess how climate impacts and GDP are associated with each pillar and the overall index, and project how food security shifts under three warming scenarios [evidence: node_1, node_2].",
+      "sources": [
+        "node_1",
+        "node_2"
+      ],
+      "latency_ms": 36397.796630859375
+    },
+    {
+      "question": "What are the main findings or conclusions?",
+      "answer": "The main findings or conclusions are that food security risks intensify as global temperatures rise, and even under a 1.5\u00b0C warming scenario, food security indicators in many low-income and fragile countries begin to deteriorate [evidence: 7]. The countries projected to experience the greatest declines in food security are among those that have contributed the least to global greenhouse gas emissions [evidence: 7]. Safeguarding food security in LDCs will require stronger international cooperation and sustained investment in resilience [evidence: 7].",
+      "sources": [
+        "7"
+      ],
+      "latency_ms": 3584.4428539276123
+    },
+    {
+      "question": "What methodology was used in this research?",
+      "answer": "The methodology used in this research involved regression analysis to estimate the marginal effect of climate risk on food security outcomes, and then applied partial-effect adjustments to observed index values to project scenario-adjusted values [evidence: A1.6.3]. The research also used standard t-tests to evaluate the statistical significance of individual coefficients [evidence: 54].",
+      "sources": [
+        "54",
+        "A1.6.3"
+      ],
+      "latency_ms": 3843.3332443237305
+    },
+    {
+      "question": "Who are the authors of this paper?",
+      "answer": "The authors of this paper are Bharadwaj, R, Karthikeyan, N and Kumar, BA [evidence: node_1].",
+      "sources": [
+        "node_1"
+      ],
+      "latency_ms": 3385.1773738861084
+    },
+    {
+      "question": "What are the key recommendations?",
+      "answer": "The key recommendations for protecting food security against systemic climate risk include building anticipatory, shock-responsive social protection as a first line of defence [evidence: node_44], and governments need climate risk-informed pre-identification and targeting, instruments that can expand quickly, and clear rules for scale-up [evidence: node_45].",
+      "sources": [
+        "node_44",
+        "node_45"
+      ],
+      "latency_ms": 3823.4012126922607
+    }
+  ]
+}
