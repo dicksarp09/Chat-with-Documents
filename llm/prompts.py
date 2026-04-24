@@ -141,8 +141,8 @@ Context:
 {context}
 
 STRICT RULES - VIOLATION = WRONG ANSWER:
-1. Every factual claim MUST cite a node_id from the context
-2. Use format: [evidence: node_id_1, node_id_2] after each claim
+1. Use the EXACT [source: node_id] markers from context to cite evidence
+2. Do NOT fabricate or guess node IDs - only use ones that appear in the context
 3. Do NOT add information not present in context
 4. Do NOT generalize or paraphrase beyond what context states
 5. If query asks about something not in context → respond: "Not found in context"
@@ -156,19 +156,20 @@ Question type detection:
 
 Output JSON (ALL fields required):
 {{
-    "answer": "YOUR ANSWER - each factual claim followed by [evidence: node_id]. NEVER include info without evidence.",
-    "evidence": ["list of node_ids used", "at least one required"],
+    "answer": "YOUR ANSWER - cite sources using format [source: node_id]. Use ONLY IDs from context.",
+    "evidence": ["list of node_ids from context"],
     "confidence": "explicitly_mentioned|partial|inferred|not_found",
     "key_points": ["specific details extracted from context"]
 }}
 
 Evidence examples (GOOD):
-- "Vulnerable communities in sub-Saharan Africa are at risk [evidence: node_42, node_55]"
-- "Climate change disrupts crop yields [evidence: node_12]"
+- "Vulnerable communities in sub-Saharan Africa are at risk [source: abc123]"
+- "Climate change disrupts crop yields [source: def456]"
 
 Non-evidence examples (BAD):
-- "People in poor regions suffer" (no node citation)
-- "The document suggests solutions" (too vague, no node)
+- "People in poor regions suffer" (no source)
+- "xyz123" (node ID not in context)
+- "The document suggests solutions" (too vague)
 """
 
 
@@ -237,12 +238,12 @@ This is used for answer generation, so accuracy is essential.
 Instructions:
 1. Extract sentences DIRECTLY relevant to answering the query
 2. Keep the exact wording - copy from context verbatim
-3. Include node_id markers at the end of each extracted sentence: [node: node_id]
+3. Preserve the [source: node_id] markers in the context - these are REQUIRED for citations
 4. Preserve factual information and key details exactly as stated
 5. Remove only redundant or clearly irrelevant content
 6. Maintain logical flow where possible
 
-Output format: Compressed context with [node: id] markers. No JSON."""
+Output format: Compressed context with [source: id] markers. No JSON."""
 
 
 def get_summary_prompt(context: str) -> str:

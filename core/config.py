@@ -61,6 +61,24 @@ class Settings(BaseSettings):
 
     log_level: str = "INFO"
 
+    # Performance settings
+    cache_enabled: bool = True
+    cache_max_size: int = 100
+    cache_ttl_seconds: int = 3600
+
+    # Pre-load models at startup
+    warmup_on_init: bool = True
+    warmup_batch_size: int = 32
+
+    # Error handling
+    enable_fallback: bool = True
+    max_retries: int = 3
+    retry_delay_seconds: float = 1.0
+
+    # Metrics collection
+    collect_metrics: bool = True
+    metrics_max_history: int = 1000
+
     class Config:
         env_file = ".env"
         extra = "allow"

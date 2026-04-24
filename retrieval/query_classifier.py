@@ -151,3 +151,9 @@ def get_intent_classifier() -> QueryIntentClassifier:
     if _intent_classifier is None:
         _intent_classifier = QueryIntentClassifier()
     return _intent_classifier
+
+
+def classify_query_intent(query: str) -> str:
+    """Classify query intent - returns string for convenience."""
+    classifier = get_intent_classifier()
+    return classifier.classify(query).value

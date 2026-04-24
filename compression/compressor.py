@@ -52,7 +52,7 @@ class ContextCompressor:
                 text = str(r.get("text", ""))
                 node_id = r.get("node_id", "unknown")
 
-            original_texts.append(text)
+            original_texts.append(text + f" [source: {node_id}]")
             source_nodes.append(node_id)
 
         combined_text = "\n\n".join(original_texts)

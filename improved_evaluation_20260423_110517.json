@@ -1,0 +1,84 @@
+{
+  "timestamp": "2026-04-23T11:05:17.019344",
+  "document": "22705iied.pdf",
+  "doc_id": "78900fe3-ffdc-4cb8-bf45-e2c2d0359504",
+  "setup_latency_ms": 281373.85177612305,
+  "aggregate": {
+    "precision": 0.5664958994389964,
+    "faithfulness": 0.4,
+    "relevance": 0.0,
+    "groundedness": 1.0,
+    "avg_latency_ms": 11590.648174285889,
+    "total_latency_ms": 57953.24087142944,
+    "intent_accuracy": 0.0
+  },
+  "improvements": {
+    "query_intent_classification": "enabled",
+    "query_expansion": "enabled",
+    "citation_enforced_prompts": "enabled",
+    "embedding_cache": "enabled",
+    "optimized_batch_size": 64
+  },
+  "per_query": [
+    {
+      "query": "Who is at risk from food security issues?",
+      "intent": "extraction",
+      "expected_intent": "EXTRACTION",
+      "intent_match": false,
+      "precision": 0.6252000795420397,
+      "faithfulness": 0.25,
+      "relevance": 0.0,
+      "groundedness": 1.0,
+      "latency_ms": 31254.435777664185,
+      "answer_preview": "Error during query analysis"
+    },
+    {
+      "query": "What are the main causes of food insecurity?",
+      "intent": "extraction",
+      "expected_intent": "REASONING",
+      "intent_match": false,
+      "precision": 0.5979375940948103,
+      "faithfulness": 0.5,
+      "relevance": 0.0,
+      "groundedness": 1.0,
+      "latency_ms": 3518.890857696533,
+      "answer_preview": "Error during query analysis"
+    },
+    {
+      "query": "What recommendations does the document make?",
+      "intent": "extraction",
+      "expected_intent": "RECOMMENDATION",
+      "intent_match": false,
+      "precision": 0.48591183182419995,
+      "faithfulness": 0.5,
+      "relevance": 0.0,
+      "groundedness": 1.0,
+      "latency_ms": 3652.912139892578,
+      "answer_preview": "Error during query analysis"
+    },
+    {
+      "query": "How does climate change affect food production?",
+      "intent": "reasoning",
+      "expected_intent": "REASONING",
+      "intent_match": false,
+      "precision": 0.532138198933918,
+      "faithfulness": 0.25,
+      "relevance": 0.0,
+      "groundedness": 1.0,
+      "latency_ms": 3945.8343982696533,
+      "answer_preview": "Error during query analysis"
+    },
+    {
+      "query": "What regions are most affected by food insecurity?",
+      "intent": "extraction",
+      "expected_intent": "EXTRACTION",
+      "intent_match": false,
+      "precision": 0.5912917928000136,
+      "faithfulness": 0.5,
+      "relevance": 0.0,
+      "groundedness": 1.0,
+      "latency_ms": 15581.167697906494,
+      "answer_preview": "Error during query analysis"
+    }
+  ]
+}

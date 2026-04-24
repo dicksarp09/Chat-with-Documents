@@ -1,163 +1,191 @@
-"""
-Redis-based cache for embeddings and retrieval results.
-"""
-
-import os
-import json
-import hashlib
 import logging
-from typing import List, Dict, Any, Optional
-import numpy as np
+import time
+from typing import Any, Dict, Optional, Callable
+from functools import lru_cache
+import hashlib
+import json
+import threading
 
 logger = logging.getLogger(__name__)
 
-try:
-    import redis
 
-    REDIS_AVAILABLE = True
-except ImportError:
-    REDIS_AVAILABLE = False
-    logger.warning("Redis not available - caching disabled")
+class QueryCache:
+    """In-memory query result cache with TTL support."""
+
+    def __init__(self, max_size: int = 100, ttl_seconds: int = 3600):
+        self._cache: Dict[str, Dict[str, Any]] = {}
+        self._max_size = max_size
+        self._ttl_seconds = ttl_seconds
+        self._lock = threading.Lock()
+        self._hits = 0
+        self._misses = 0
+
+    def _make_key(self, query: str, doc_id: str) -> str:
+        content = f"{doc_id}:{query}"
+        return hashlib.md5(content.encode()).hexdigest()
+
+    def get(self, query: str, doc_id: str) -> Optional[Dict[str, Any]]:
+        key = self._make_key(query, doc_id)
+        with self._lock:
+            if key in self._cache:
+                entry = self._cache[key]
+                if time.time() - entry["timestamp"] < self._ttl_seconds:
+                    self._hits += 1
+                    logger.debug(f"Cache hit: {query[:30]}...")
+                    return entry["result"]
+                else:
+                    del self._cache[key]
+            self._misses += 1
+            return None
+
+    def set(self, query: str, doc_id: str, result: Dict[str, Any]) -> None:
+        key = self._make_key(query, doc_id)
+        with self._lock:
+            if len(self._cache) >= self._max_size:
+                oldest_key = min(
+                    self._cache.keys(),
+                    key=lambda k: self._cache[k]["timestamp"]
+                )
+                del self._cache[oldest_key]
+
+            self._cache[key] = {
+                "result": result,
+                "timestamp": time.time(),
+            }
+            logger.debug(f"Cache set: {query[:30]}...")
+
+    def get_stats(self) -> Dict[str, Any]:
+        with self._lock:
+            total = self._hits + self._misses
+            hit_rate = self._hits / total if total > 0 else 0.0
+            return {
+                "size": len(self._cache),
+                "hits": self._hits,
+                "misses": self._misses,
+                "hit_rate": hit_rate,
+            }
+
+    def clear(self) -> None:
+        with self._lock:
+            self._cache.clear()
+            self._hits = 0
+            self._misses = 0
 
 
 class EmbeddingCache:
-    """Cache for query embeddings."""
+    """In-memory cache for embeddings."""
 
-    def __init__(self, host: str = None, port: int = None, ttl: int = 3600):
-        self.enabled = False
-        self.ttl = ttl
-        self.redis = None
+    def __init__(self, max_size: int = 1000):
+        self._cache: Dict[str, Any] = {}
+        self._max_size = max_size
+        self._lock = threading.Lock()
 
-        if REDIS_AVAILABLE:
-            try:
-                host = host or os.getenv("REDIS_HOST", "localhost")
-                port = port or int(os.getenv("REDIS_PORT", "6379"))
-                self.redis = redis.Redis(host=host, port=port, decode_responses=False)
-                self.redis.ping()
-                self.enabled = True
-                logger.info(f"Embedding cache enabled (Redis at {host}:{port})")
-            except Exception as e:
-                logger.warning(f"Redis not available: {e}. Caching disabled.")
-        else:
-            logger.warning("redis-py not installed. Caching disabled.")
+    def get(self, text: str) -> Optional[Any]:
+        key = hashlib.md5(text.encode()).hexdigest()
+        with self._lock:
+            return self._cache.get(key)
 
-    def _hash_key(self, text: str) -> str:
-        return f"embed:{hashlib.md5(text.encode()).hexdigest()}"
-
-    def get(self, text: str) -> Optional[np.ndarray]:
-        if not self.enabled or not self.redis:
-            return None
-
-        try:
-            key = self._hash_key(text)
-            data = self.redis.get(key)
-            if data:
-                logger.info(f"Cache hit for embedding: {text[:30]}...")
-                return np.frombuffer(data, dtype=np.float32)
-        except Exception as e:
-            logger.warning(f"Cache get failed: {e}")
-        return None
-
-    def set(self, text: str, embedding: np.ndarray):
-        if not self.enabled or not self.redis:
-            return
-
-        try:
-            key = self._hash_key(text)
-            data = embedding.astype(np.float32).tobytes()
-            self.redis.setex(key, self.ttl, data)
-        except Exception as e:
-            logger.warning(f"Cache set failed: {e}")
+    def set(self, text: str, embedding: Any) -> None:
+        key = hashlib.md5(text.encode()).hexdigest()
+        with self._lock:
+            if len(self._cache) >= self._max_size:
+                keys = list(self._cache.keys())
+                del self._cache[keys[0]]
+            self._cache[key] = embedding
 
 
 class RetrievalCache:
-    """Cache for retrieval results."""
+    """In-memory cache for retrieval results."""
 
-    def __init__(self, host: str = None, port: int = None, ttl: int = 1800):
-        self.enabled = False
-        self.ttl = ttl
-        self.redis = None
+    def __init__(self, max_size: int = 100):
+        self._cache: Dict[str, Any] = {}
+        self._max_size = max_size
+        self._lock = threading.Lock()
 
-        if REDIS_AVAILABLE:
-            try:
-                host = host or os.getenv("REDIS_HOST", "localhost")
-                port = port or int(os.getenv("REDIS_PORT", "6379"))
-                self.redis = redis.Redis(host=host, port=port, decode_responses=True)
-                self.redis.ping()
-                self.enabled = True
-                logger.info(f"Retrieval cache enabled (Redis at {host}:{port})")
-            except Exception as e:
-                logger.warning(f"Redis not available: {e}. Caching disabled.")
-        else:
-            logger.warning("redis-py not installed. Caching disabled.")
+    def get(self, query: str, doc_id: str) -> Optional[Any]:
+        key = hashlib.md5(f"{doc_id}:{query}".encode()).hexdigest()
+        with self._lock:
+            return self._cache.get(key)
 
-    def _hash_key(self, query: str, dataset_id: str, top_k: int) -> str:
-        return (
-            f"retrieval:{dataset_id}:{top_k}:{hashlib.md5(query.encode()).hexdigest()}"
-        )
+    def set(self, query: str, doc_id: str, results: Any) -> None:
+        key = hashlib.md5(f"{doc_id}:{query}".encode()).hexdigest()
+        with self._lock:
+            if len(self._cache) >= self._max_size:
+                keys = list(self._cache.keys())
+                del self._cache[keys[0]]
+            self._cache[key] = results
 
-    def get(
-        self, query: str, dataset_id: str, top_k: int = 20
-    ) -> Optional[List[Dict[str, Any]]]:
-        if not self.enabled or not self.redis:
-            return None
 
-        try:
-            key = self._hash_key(query, dataset_id, top_k)
-            data = self.redis.get(key)
-            if data:
-                logger.info(f"Cache hit for retrieval: {query[:30]}...")
-                return json.loads(data)
-        except Exception as e:
-            logger.warning(f"Cache get failed: {e}")
-        return None
+class MetricsCollector:
+    """Collects query latency and success rate metrics."""
 
-    def set(
-        self, query: str, dataset_id: str, top_k: int, results: List[Dict[str, Any]]
-    ):
-        if not self.enabled or not self.redis:
-            return
+    def __init__(self):
+        self._queries: list = []
+        self._lock = threading.Lock()
+        self._max_history = 1000
 
-        try:
-            key = self._hash_key(query, dataset_id, top_k)
-            # Store simplified results (just IDs and scores)
-            simplified = [
-                {"node_id": r.get("node_id", ""), "score": r.get("score", 0)}
-                for r in results
-            ]
-            self.redis.setex(key, self.ttl, json.dumps(simplified))
-            logger.info(f"Cached retrieval: {len(results)} results")
-        except Exception as e:
-            logger.warning(f"Cache set failed: {e}")
+    def record(
+        self,
+        query: str,
+        doc_id: str,
+        latency_ms: float,
+        success: bool,
+        error: Optional[str] = None,
+    ) -> None:
+        with self._lock:
+            self._queries.append({
+                "query": query[:100],
+                "doc_id": doc_id,
+                "latency_ms": latency_ms,
+                "success": success,
+                "error": error,
+                "timestamp": time.time(),
+            })
 
-    def clear_dataset(self, dataset_id: str):
-        """Clear cache for a specific dataset."""
-        if not self.enabled or not self.redis:
-            return
+            if len(self._queries) > self._max_history:
+                self._queries = self._queries[-self._max_history:]
 
-        try:
-            pattern = f"retrieval:{dataset_id}:*"
-            keys = self.redis.keys(pattern)
-            if keys:
-                self.redis.delete(*keys)
-                logger.info(f"Cleared {len(keys)} cache entries for {dataset_id}")
-        except Exception as e:
-            logger.warning(f"Cache clear failed: {e}")
+    def get_stats(self) -> Dict[str, Any]:
+        with self._lock:
+            if not self._queries:
+                return {
+                    "total_queries": 0,
+                    "success_rate": 0.0,
+                    "avg_latency_ms": 0.0,
+                    "p50_latency_ms": 0.0,
+                    "p95_latency_ms": 0.0,
+                    "p99_latency_ms": 0.0,
+                }
 
-    def clear_all(self):
-        """Clear all caches."""
-        if not self.enabled or not self.redis:
-            return
+            successful = [q for q in self._queries if q["success"]]
+            latencies = sorted([q["latency_ms"] for q in self._queries])
 
-        try:
-            patterns = ["embed:*", "retrieval:*"]
-            for pattern in patterns:
-                keys = self.redis.keys(pattern)
-                if keys:
-                    self.redis.delete(*keys)
-            logger.info("Cleared all caches")
-        except Exception as e:
-            logger.warning(f"Cache clear failed: {e}")
+            n = len(latencies)
+            return {
+                "total_queries": len(self._queries),
+                "success_rate": len(successful) / len(self._queries),
+                "avg_latency_ms": sum(latencies) / n,
+                "p50_latency_ms": latencies[int(n * 0.5)],
+                "p95_latency_ms": latencies[int(n * 0.95)],
+                "p99_latency_ms": latencies[int(n * 0.99)],
+            }
+
+    def get_recent(self, limit: int = 10) -> list:
+        with self._lock:
+            return self._queries[-limit:]
+
+
+_query_cache: Optional[QueryCache] = None
+_embedding_cache: Optional[EmbeddingCache] = None
+_retrieval_cache: Optional[RetrievalCache] = None
+_metrics: Optional[MetricsCollector] = None
+
+
+def get_query_cache() -> QueryCache:
+    global _query_cache
+    if _query_cache is None:
+        _query_cache = QueryCache()
+    return _query_cache
 
 
 def get_embedding_cache() -> EmbeddingCache:
@@ -174,5 +202,8 @@ def get_retrieval_cache() -> RetrievalCache:
     return _retrieval_cache
 
 
-_embedding_cache: Optional[EmbeddingCache] = None
-_retrieval_cache: Optional[RetrievalCache] = None
+def get_metrics() -> MetricsCollector:
+    global _metrics
+    if _metrics is None:
+        _metrics = MetricsCollector()
+    return _metrics

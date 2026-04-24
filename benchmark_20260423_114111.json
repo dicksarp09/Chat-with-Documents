@@ -1,0 +1,43 @@
+{
+  "timestamp": "2026-04-23T11:41:11.064550",
+  "warmup_ms": 19195.634365081787,
+  "engine_load_ms": 56.02097511291504,
+  "queries": 5,
+  "successful": 5,
+  "avg_latency_ms": 11101.267099380493,
+  "min_latency_ms": 3139.573812484741,
+  "max_latency_ms": 29966.821908950806,
+  "total_ms": 55506.335496902466,
+  "per_query": [
+    {
+      "query": "Who is at risk from food security issues?",
+      "latency_ms": 29966.821908950806,
+      "answer_length": 130,
+      "sources": 1
+    },
+    {
+      "query": "What are the main causes of food insecurity?",
+      "latency_ms": 3139.573812484741,
+      "answer_length": 524,
+      "sources": 1
+    },
+    {
+      "query": "What recommendations does the document make?",
+      "latency_ms": 3396.8944549560547,
+      "answer_length": 425,
+      "sources": 3
+    },
+    {
+      "query": "How does climate change affect food production?",
+      "latency_ms": 3770.8487510681152,
+      "answer_length": 652,
+      "sources": 2
+    },
+    {
+      "query": "What regions are most affected by food insecurity?",
+      "latency_ms": 15232.196569442749,
+      "answer_length": 186,
+      "sources": 1
+    }
+  ]
+}

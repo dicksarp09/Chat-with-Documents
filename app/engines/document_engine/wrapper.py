@@ -1,8 +1,12 @@
 import logging
 import tempfile
 import os
+import time
 from pathlib import Path
 from typing import Dict, Any, Optional
+
+from core.config import settings
+from core.cache import get_query_cache, get_metrics
 
 logger = logging.getLogger(__name__)
 
@@ -12,7 +16,10 @@ class DocumentEngineWrapper:
         self.registry: Dict[str, Dict[str, Any]] = {}
         self._initialized = False
         self._sqlite_store = None
+        self._cache = get_query_cache() if settings.cache_enabled else None
+        self._metrics = get_metrics() if settings.collect_metrics else None
         self._try_load_from_sqlite()
+        self._warmup_models()
 
     def _ensure_init(self):
         if not self._initialized:
@@ -34,7 +41,6 @@ class DocumentEngineWrapper:
                 from storage.vector_store import get_vector_store
                 vector_store = get_vector_store()
 
-                # Only load the most recent dataset
                 latest_ds = max(datasets, key=lambda d: d.get("created_at", ""))
                 logger.info(f"Loading most recent: {latest_ds['name']}")
 
@@ -50,6 +56,20 @@ class DocumentEngineWrapper:
         except Exception as e:
             logger.warning(f"Could not load from SQLite: {e}")
             self._sqlite_store = None
+
+    def _warmup_models(self):
+        """Pre-load models to reduce first-query latency."""
+        if not settings.warmup_on_init:
+            return
+
+        try:
+            from embeddings.embedder import warmup_embedder
+
+            logger.info("Pre-warming models...")
+            warmup_embedder()
+            logger.info("Models pre-warmed")
+        except Exception as e:
+            logger.warning(f"Model warmup failed: {e}")
 
     def _init_engine(self):
         try:
@@ -161,9 +181,11 @@ class DocumentEngineWrapper:
 
     def query(self, query: str, doc_id: str, **kwargs) -> Dict[str, Any]:
         self._ensure_init()
+        start_time = time.time()
+        error_msg = None
 
         if doc_id not in self.registry:
-            return {
+            result = {
                 "answer": f"Document {doc_id} not found",
                 "summary": "",
                 "key_points": [],
@@ -172,8 +194,23 @@ class DocumentEngineWrapper:
                 "actions": [],
                 "sources": [],
             }
+            if self._metrics:
+                self._metrics.record(
+                    query, doc_id, (time.time() - start_time) * 1000, False, "doc_not_found"
+                )
+            return result
 
         try:
+            if self._cache:
+                cached = self._cache.get(query, doc_id)
+                if cached:
+                    logger.info(f"Cache hit for query: {query[:30]}...")
+                    if self._metrics:
+                        self._metrics.record(
+                            query, doc_id, (time.time() - start_time) * 1000, True
+                        )
+                    return cached
+
             hybrid_retriever = self._get_hybrid_retriever()
             reranker = self._get_reranker()
             compressor = self._get_compressor()
@@ -184,7 +221,6 @@ class DocumentEngineWrapper:
                 f"Hybrid retriever corpus size: {len(hybrid_retriever.corpus_ids)}"
             )
 
-            # Try without doc_id first to see if retrieval works at all
             retrieved_all = hybrid_retriever.retrieve(query, doc_id=None, top_k=5)
             logger.info(f"Retrieved {len(retrieved_all)} results (no filter)")
 
@@ -196,7 +232,7 @@ class DocumentEngineWrapper:
                 retrieved = retrieved_all
 
             if not retrieved:
-                return {
+                result = {
                     "answer": "No relevant content found",
                     "summary": "",
                     "key_points": [],
@@ -205,6 +241,11 @@ class DocumentEngineWrapper:
                     "actions": [],
                     "sources": [],
                 }
+                if self._metrics:
+                    self._metrics.record(
+                        query, doc_id, (time.time() - start_time) * 1000, False, "no_retrieval"
+                    )
+                return result
 
             reranked = reranker.rerank(query, retrieved, top_k=5)
             compressed = compressor.compress(query, reranked)
@@ -215,13 +256,24 @@ class DocumentEngineWrapper:
             )
 
             if validation.is_valid:
-                return validation.data
+                result = validation.data
+            else:
+                result = query_result.model_dump()
 
-            return query_result.model_dump()
+            if self._cache:
+                self._cache.set(query, doc_id, result)
+
+            if self._metrics:
+                self._metrics.record(
+                    query, doc_id, (time.time() - start_time) * 1000, True
+                )
+
+            return result
 
         except Exception as e:
             logger.error(f"Document query error: {e}")
-            return {
+            error_msg = str(e)
+            result = {
                 "answer": f"Error processing query: {str(e)}",
                 "summary": "",
                 "key_points": [],
@@ -230,6 +282,17 @@ class DocumentEngineWrapper:
                 "actions": [],
                 "sources": [],
             }
+
+            if settings.enable_fallback:
+                result["answer"] = settings.fallback_answer
+                logger.warning("Using fallback answer due to error")
+
+            if self._metrics:
+                self._metrics.record(
+                    query, doc_id, (time.time() - start_time) * 1000, False, error_msg
+                )
+
+            return result
 
     def list_documents(self) -> list:
         return [

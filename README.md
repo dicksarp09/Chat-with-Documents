@@ -740,6 +740,72 @@ All settings in `core/config.py`:
 
 ---
 
+## Production Improvements (v1.1.0)
+
+### What's New
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **In-memory Caching** | Query result cache with TTL | ✅ |
+| **Metrics Monitoring** | Latency + success rate tracking | ✅ |
+| **Model Warmup** | Pre-load embeddings at startup | ✅ |
+| **Fixed Citations** | Use actual node UUIDs in answers | ✅ |
+| **RAGAS Scoring** | Automated evaluation pipeline | ✅ |
+| **Error Handling** | Graceful degradation | ✅ |
+| **Unit Tests** | Core functionality tests | ✅ |
+| **CI/CD** | GitHub Actions workflow | ✅ |
+
+### Configuration
+
+```python
+# Performance settings
+cache_enabled: bool = True
+cache_max_size: int = 100
+cache_ttl_seconds: int = 3600
+
+# Pre-load models at startup
+warmup_on_init: bool = True
+warmup_batch_size: int = 32
+
+# Error handling
+enable_fallback: bool = True
+max_retries: int = 3
+
+# Metrics collection
+collect_metrics: bool = True
+metrics_max_history: int = 1000
+```
+
+### Latest Evaluation Results
+
+| Question | Latency | Sources |
+|----------|---------|---------|
+| What is this research paper about? | 10,053ms | 2 real UUIDs |
+| What are the main findings? | 3,300ms | 3 real UUIDs |
+| What methodology was used? | 3,534ms | 1 real UUID |
+| Who are the authors? | 7,280ms | 1 real UUID |
+| What are the key recommendations? | 12,905ms | 2 real UUIDs |
+| **Average** | **7,414ms** | - |
+
+### Key Improvements in v1.1.0
+
+1. **Citations now use actual node UUIDs**: `[source: 2aca9501-696a-4d1e-b4cc-d603a8945cf2]`
+2. **Model warmup at startup**: Reduces first-query latency significantly
+3. **In-memory query cache**: Caches results for repeated queries
+4. **Metrics tracking**: Records latency, success rate, percentiles
+5. **Graceful error handling**: Uses fallback answer on errors
+
+### Benchmark Comparison
+
+| Metric | v1.0.0 (Gemini) | v1.1.0 (MiniLM) |
+|--------|------------------|-----------------|
+| Embedding cost | API ($) | Free |
+| First-query latency | ~36s | ~10s |
+| Avg query latency | ~3.6s | ~3.7s |
+| Citation format | "node_X" | Real UUIDs |
+
+---
+
 ## Evaluation Metrics
 
 ### LLM-as-Judge (Answer Quality)

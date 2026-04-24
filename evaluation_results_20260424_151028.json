@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-04-24T15:10:28.269719",
+  "document": "22705iied.pdf (Research Paper)",
+  "total_time_ms": 37072.60823249817,
+  "results": [
+    {
+      "question": "What is this research paper about?",
+      "answer": "This research paper is about the climate\u2013food nexus, constructing a new Food Security Index (FSI) for 162 countries across four pillars, and assessing how climate impacts and GDP are associated with each pillar and the overall index [source: 2aca9501-696a-4d1e-b4cc-d603a8945cf2] [source: 2b9be578-0409-45bb-92fc-5042f097f04d].",
+      "sources": [
+        "2aca9501-696a-4d1e-b4cc-d603a8945cf2",
+        "2b9be578-0409-45bb-92fc-5042f097f04d"
+      ],
+      "latency_ms": 10053.264379501343
+    },
+    {
+      "question": "What are the main findings or conclusions?",
+      "answer": "The main findings or conclusions are that food security risks intensify as global temperatures rise, and the countries projected to experience the greatest declines in food security are among those that have contributed the least to global greenhouse gas emissions [source: 06cacc2c-4c17-48a7-9130-f8e7fd91fb2c] [source: af78f393-8654-4dd8-bf7e-72c835e223d9]. The report also highlights the need for stronger international cooperation and sustained investment in resilience, including scaling up climate-resilient food systems and strengthening anticipatory social protection [source: 2bfee756-75c6-499a-9ac6-21a32ee83923].",
+      "sources": [
+        "06cacc2c-4c17-48a7-9130-f8e7fd91fb2c",
+        "af78f393-8654-4dd8-bf7e-72c835e223d9",
+        "2bfee756-75c6-499a-9ac6-21a32ee83923"
+      ],
+      "latency_ms": 3299.8034954071045
+    },
+    {
+      "question": "What methodology was used in this research?",
+      "answer": "The methodology used in this research involved regression analysis to estimate the marginal effect of climate risk on food security outcomes, and then applied partial-effect adjustments to observed index values to project food security outcomes under different climate scenarios [source: 31879545-4f75-4680-abbf-e3252917673c].",
+      "sources": [
+        "31879545-4f75-4680-abbf-e3252917673c"
+      ],
+      "latency_ms": 3534.2226028442383
+    },
+    {
+      "question": "Who are the authors of this paper?",
+      "answer": "The authors of this paper are Bharadwaj, R, Karthikeyan, N and Kumar, BA [source: c4f172af-3e34-4450-9c8c-edd9c225bd62].",
+      "sources": [
+        "c4f172af-3e34-4450-9c8c-edd9c225bd62"
+      ],
+      "latency_ms": 7280.08770942688
+    },
+    {
+      "question": "What are the key recommendations?",
+      "answer": "The key recommendations for protecting food security against systemic climate risk include building anticipatory, shock-responsive social protection as a first line of defence [source: 5793dd3b-01de-4f90-8d6e-719e3cb8971f], climate risk-informed pre-identification and targeting [source: 5793dd3b-01de-4f90-8d6e-719e3cb8971f], and instruments that can expand quickly such as cash top-ups, food or in-kind support, nutrition-linked transfers, and wage employment [source: 5793dd3b-01de-4f90-8d6e-719e3cb8971f].",
+      "sources": [
+        "5793dd3b-01de-4f90-8d6e-719e3cb8971f",
+        "128bf911-ee0a-4f67-836d-5e7ac76f38bc"
+      ],
+      "latency_ms": 12905.230045318604
+    }
+  ]
+}

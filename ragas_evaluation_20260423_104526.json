@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-04-23T10:45:26.407086",
+  "document": "22705iied.pdf",
+  "doc_id": "ceb04e7e-d294-4e8b-b1ad-e9d3727deeab",
+  "setup_latency_ms": 216164.17789459229,
+  "aggregate": {
+    "precision": 0.6003080590327404,
+    "faithfulness": 0.7164771762617688,
+    "relevance": 0.5866666666666667,
+    "groundedness": 1.0,
+    "avg_latency_ms": 8488.272333145142,
+    "total_latency_ms": 42441.36166572571
+  },
+  "per_query": [
+    {
+      "query": "Who is at risk from food security issues?",
+      "precision": 0.6852367799137837,
+      "faithfulness": 0.6818181818181818,
+      "relevance": 0.8,
+      "groundedness": 1.0,
+      "latency_ms": 29192.26384162903,
+      "answer_preview": "Vulnerable communities, particularly those in fragile and conflict-affected countries, are at risk from food security issues due to climate change, which disrupts crop yields, reduces livestock produc"
+    },
+    {
+      "query": "What are the main causes of food insecurity?",
+      "precision": 0.6423997936106591,
+      "faithfulness": 0.8157894736842105,
+      "relevance": 0.6,
+      "groundedness": 1.0,
+      "latency_ms": 3285.8550548553467,
+      "answer_preview": "The main causes of food insecurity are weak purchasing power, disrupted markets and services, repeated shocks, and limited coping capacity. Specifically, conflict and climate shocks, such as drought, "
+    },
+    {
+      "query": "What recommendations does the document make?",
+      "precision": 0.4049265265201666,
+      "faithfulness": 0.671875,
+      "relevance": 0.2,
+      "groundedness": 1.0,
+      "latency_ms": 3295.666217803955,
+      "answer_preview": "The document recommends building anticipatory, shock-responsive social protection as a first line of defence to protect food security against systemic climate risk. This includes climate risk-informed"
+    },
+    {
+      "query": "How does climate change affect food production?",
+      "precision": 0.6747306406767125,
+      "faithfulness": 0.8,
+      "relevance": 0.6666666666666666,
+      "groundedness": 1.0,
+      "latency_ms": 3346.1921215057373,
+      "answer_preview": "Climate change affects food production by disrupting crop yields, reducing livestock productivity, and depleting fish stocks due to increasing temperatures, erratic rainfall, and more frequent extreme"
+    },
+    {
+      "query": "What regions are most affected by food insecurity?",
+      "precision": 0.5942465544423804,
+      "faithfulness": 0.6129032258064516,
+      "relevance": 0.6666666666666666,
+      "groundedness": 1.0,
+      "latency_ms": 3321.3844299316406,
+      "answer_preview": "The regions most affected by food insecurity are sub-Saharan Africa, South Asia, and Central America, with Africa having the highest food insecurity burden and hunger levels rising in this region desp"
+    }
+  ]
+}
